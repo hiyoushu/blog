@@ -1,0 +1,31 @@
+include ../header
+main
+  .index-title
+    h1 #{title}
+  .index-main
+    section.index-postlist
+      ul
+        each postItem in posts
+          li.post-item
+            a(href="/blog/#{postItem.seoTitle}")
+              h2.index-post-title= postItem.title
+              p.index-post-intro!= postItem.intro
+      .index-postlist-footer
+        a(href="/blog/page/2") older posts
+
+    section.index-aside
+      .tag-list
+        h3
+          a(href="/blog/tags") tags
+        each tagItem in tags
+          .tag-item
+            a(href="/blog/tags/#{tagItem.tagName}")= tagItem.tagName
+      ul
+        each archiveItem in archives
+          li.archive-item
+            h3 #{archiveItem.year}
+            - for (var [month, num] of archiveItem.months)
+              p
+                a(href="/blog/archive/#{archiveItem.year}/#{month}") #{archiveItem.year]年#{month}月
+
+include ../footer

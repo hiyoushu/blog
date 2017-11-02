@@ -1,0 +1,31 @@
+doctype html
+html(lang="zh-CN")
+  head
+    meta(charset="utf-8")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge,chrome=1")
+    meta(name="renderer", content="webkit")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
+    meta(name="apple-mobile-web-app-capable", content="yes")
+    meta(name="apple-mobile-web-app-status-bar-style", content="black")
+    meta(name="format-detection", content="telephone=no")
+    title= title
+    //- inject:css
+    link(rel="stylesheet", href="/css/admin_d41d8cd98f00b204e9800998ecf8427e.css")
+    link(rel="stylesheet", href="/css/font_e4b70d1f2111798e3c28dd0fbcc263be.css")
+    link(rel="stylesheet", href="/css/normalize_924cc62bda01ca298267563aa0a649b0.css")
+    link(rel="stylesheet", href="/css/style_0392a79e0af5863f6d300053788a2bd3.css")
+    //- endinject
+    
+    //- inject:js
+    script(src="/js/common_21cb765a280734cfa195ed113588960a.js")
+    script(src="/js/jquery-3.2.1_be1bac2e55e8c79fe4aa515a509ad2e8.js")
+    //- endinject
+  body
+    header.header
+      section.header-section
+        a.logo(href="/") logo
+        nav.header-nav
+          a.nav-item(href="/blog") 博客
+          a.nav-item(href="/blog/tag") 标签
+          a.nav-item(href="/blog/archive") 存档
+          a.nav-item(href="/about") 关于

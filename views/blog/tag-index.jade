@@ -1,0 +1,12 @@
+include ../header
+
+main.wrapper
+  h1 #{title}
+  p !{content}
+
+  ul
+    each tagItem in tags
+      li.post-item
+        a(href="/blog/tags/#{tagItem.tagName}")= tagItem.tagName
+
+include ../footer

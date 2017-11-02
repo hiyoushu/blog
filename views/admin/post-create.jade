@@ -1,0 +1,75 @@
+include ../header
+style.
+  .container {
+    width: 660px;
+    min-height: 400px;
+    margin: auto;
+    padding: 10px;
+    border: 1px solid #ccc;
+  }
+  .post-form {
+    width: 780px;
+    margin: auto;
+  }
+  .post-edit {
+    margin: 20px auto;
+  }
+  .post-edit input {
+    display: inline-block;
+    padding: 8px;
+  }
+main.wrapper
+  section.m-header
+    h1 create post
+    p you can write content below
+  section.post-form
+    form(method="post" action="create")
+      .post-edit
+        input(name="title", placeholder="标题")
+      .post-edit
+        input(name="seoTitle", placeholder="seo标题")
+      .post-edit
+        input(name="tag", placeholder="标签")
+      .post-edit
+        input#upload-file(type="file", accept=".jpeg, .jpg, .png", placeholder="上传题图")
+        input#coverImg(name="coverImg", type="hidden")
+      .post-edit
+        .container(contenteditable="true", name="content", placeholder="内容")
+      .post-edit
+        input(type="submit")
+
+script.
+  $('#upload-file').on('change', function(){
+    var $this = $(this);
+    var file = $this.prop('files');
+    var data = new FormData();
+    data.append('uploadFile', file[0]);
+
+    $.ajax({
+      url: '/admin/upload',
+      type: 'POST',
+      data: data,
+      cache: false,
+      processData: false,
+      contentType: false,
+    })
+    .done(function (res){
+      if(res.code == 10001) {
+        $('#coverImg').val(res.data.filePath);
+        if(window.FileReader) {
+          var reader = new FileReader();
+          reader.onload = function(e) {
+            $this.after('<img src="'+ e.target.result +'">');
+          }
+          reader.readAsDataURL($this[0].files[0]);
+        }
+      } else {
+        alert(res.message)
+      }
+    })
+    .fail(function (error){
+      console.log(error);
+    });
+  });
+
+include ../footer

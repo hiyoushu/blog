@@ -1,0 +1,58 @@
+include ../header
+
+style.
+  .post-list {
+    margin: 40px auto;
+  }
+  .section {
+    width: 800px;
+    margin: auto;
+  }
+  .page-title {
+    text-align: center;
+  }
+  .admin-delete-post {
+    margin-left: 20px;
+    cursor: pointer;
+  }
+
+section.section
+  h1.page-title this is admin index page
+
+section.section
+  a(href="post/create") write article
+
+  .post-list
+    each postItem in posts
+      .post-item
+        a(href="/admin/post/edit/#{postItem._id}")= postItem.title
+        span.admin-delete-post(data-id="#{postItem._id}") 删除
+
+  .tag-list
+    each tagItem in tags
+      .tag-item
+        a(href="/blog/tag/#{tagItem.tagName}")= tagItem.tagName
+script.
+  $('.admin-delete-post').on('click', function(){
+    var $this = $(this);
+    var _id = $this.data('id');
+    $.ajax({
+      url: '/api/post/'+ _id,
+      type: 'DELETE',
+      headers: {
+        'X-Token': ''
+      }
+    })
+    .done(function(data) {
+      if (data.code == 10001) {
+        $this.parents('.post-item').remove();
+      } else {
+        alert(data.message);
+      }
+    })
+    .fail(function(error) {
+      alert( "error" );
+    })
+  });
+
+include ../footer

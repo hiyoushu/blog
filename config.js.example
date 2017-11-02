@@ -1,0 +1,23 @@
+module.exports = {
+  port: 3000,
+  session: {
+    secret: 'your secret',
+    key: 'you key',
+    maxAge: 3600 * 24
+  },
+  mongodb: {
+    database: 'mongodb://address:port/database',
+    options: {
+      
+    }
+  },
+  redis: {
+    auth: 'your auth',
+    port: 'your port',
+    address: 'your redis IP address'
+  },
+  login: {
+    available: true
+  },
+  uploadDir: './public/upload/',
+}

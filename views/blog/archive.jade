@@ -1,0 +1,13 @@
+include ../header
+
+main.wrapper
+  h1 #{title}
+  p #{content}
+  ul
+    each archiveItem in archives
+      li.post-item
+        h3 #{archiveItem.year}
+          - for (var [month, num] of archiveItem.months)
+            p
+              a(href="/blog/archive/#{archiveItem.year}/#{month}") #{archiveItem.year]年#{month}月
+include ../footer
