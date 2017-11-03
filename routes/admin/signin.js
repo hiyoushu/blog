@@ -4,9 +4,10 @@ var config = require('../../config');
 var sha1 = require('sha1');
 var User = require('../../services/user');
 var checkNotLogin = require('../../middlewares/check').checkNotLogin;
+var checkAdmin = require('../../middlewares/check').checkAdmin;
 
 // GET / sign in page
-router.get('/', checkNotLogin,function(req, res, next) {
+router.get('/', checkAdmin, checkNotLogin,function(req, res, next) {
   if (!config.login.available) {
     return next();
   }
@@ -15,7 +16,7 @@ router.get('/', checkNotLogin,function(req, res, next) {
 });
 
 // POST / sign in request
-router.post('/', checkNotLogin, function(req, res, next) {
+router.post('/', checkAdmin, checkNotLogin, function(req, res, next) {
   var name = req.body.name;
   var password = req.body.password;
   var redirectURL = req.query.redirect;

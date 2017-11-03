@@ -34,7 +34,7 @@ main.wrapper
         input#upload-file(type="file", accept=".jpeg, .jpg, .png", placeholder="上传题图")
         input#coverImg(name="coverImg", type="hidden")
       .post-edit
-        .container(contenteditable="true", name="content", placeholder="内容")
+        textarea.container(contenteditable="true", name="content", placeholder="内容")
       .post-edit
         input(type="submit")
 

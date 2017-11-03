@@ -5,6 +5,7 @@ var mkdirSyncR = require('../../lib/mkdir-sync-r');
 var moment = require('moment');
 
 var checkLogin = require('../../middlewares/check').checkLogin;
+var checkAdmin = require('../../middlewares/check').checkAdmin;
 var uploadDir = require('../../config').uploadDir;
 var multer = require('multer');
 var storage = multer.diskStorage({
@@ -31,10 +32,10 @@ var upload = multer({storage: storage});
 
 
 // upload file handle
-router.post('/', checkLogin, function(req, res, next) {
+router.post('/', checkAdmin, checkLogin, function(req, res, next) {
   next();
 });
-router.post('/', upload.single('uploadFile'), function(req, res, next) {
+router.post('/', checkAdmin, upload.single('uploadFile'), function(req, res, next) {
   res.json({
     code: 10001,
     message: 'upload success',

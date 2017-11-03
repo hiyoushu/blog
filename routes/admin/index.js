@@ -5,10 +5,11 @@ var Post = require('../../services/post');
 var Tag = require('../../services/tag');
 var Archive = require('../../services/archive');
 var checkLogin = require('../../middlewares/check').checkLogin;
+var checkAdmin = require('../../middlewares/check').checkAdmin;
 
 
 /* GET home page. */
-router.get('/', checkLogin, function(req, res, next) {
+router.get('/', checkAdmin, checkLogin, function(req, res, next) {
   Promise.all([
     Post.getPostsByNum(20),
     Tag.getAllTags(),

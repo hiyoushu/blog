@@ -2,21 +2,22 @@ var express = require('express');
 var router = express.Router();
 var Post = require('../../services/post');
 var checkLogin = require('../../middlewares/check').checkLogin;
+var checkAdmin = require('../../middlewares/check').checkAdmin;
 
 /* GET home page. */
-router.get('/', checkLogin,function(req, res, next) {
+router.get('/', checkAdmin, checkLogin,function(req, res, next) {
   res.redirect('/admin/');
 });
 
 
 // GET /post/create create post page
-router.get('/create', checkLogin, function(req, res, next) {
+router.get('/create', checkAdmin, checkLogin, function(req, res, next) {
   res.render('admin/post-create', { title: 'create post hiyoushu' });
 });
 
 
 // GET /post/edit edit post page
-router.get('/edit/:postId', checkLogin, function(req, res, next) {
+router.get('/edit/:postId', checkAdmin, checkLogin, function(req, res, next) {
   var postId = req.params.postId;
   Post.getPostById(postId)
     .then(function(post) {
@@ -29,7 +30,7 @@ router.get('/edit/:postId', checkLogin, function(req, res, next) {
 });
 
 // POST /post/edit update post
-router.post('/edit/:postId', checkLogin, function(req, res, next) {
+router.post('/edit/:postId', checkAdmin, checkLogin, function(req, res, next) {
   var postId = req.params.postId;
   var author = req.session.user._id;
   var title = req.body.title;
@@ -78,7 +79,7 @@ router.post('/edit/:postId', checkLogin, function(req, res, next) {
 
 
 // POST /post/create handle create post
-router.post('/create', checkLogin, function(req, res, next) {
+router.post('/create', checkAdmin, checkLogin, function(req, res, next) {
   var author = req.session.user._id,
       title = req.body.title,
       content = req.body.content,

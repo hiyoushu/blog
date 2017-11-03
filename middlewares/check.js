@@ -22,5 +22,21 @@ module.exports = {
       return res.redirect('back');
     }
     next();
+  },
+
+  checkAdmin: function checkAdmin(req, res, next) {
+    var adminConfig = require('../config').admin;
+    if (!adminConfig.available) {
+      return res.status(404).render('404');
+    }
+
+    if (!adminConfig.robotsAccess) {
+      var userAgent = req.headers['user-agent'];
+      if (/spider|Googlebot|Bingbot|Baiduspider|Sogou/ig.test(userAgent)) {
+        return res.status(404).render('404');
+      }
+    }
+
+    next();
   }
 };
