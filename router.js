@@ -3,6 +3,8 @@
  */
 
 var fs = require('fs');
+var ignoreI18nPath = require('./config').ignoreI18nPath;
+var checkStrPartOfArr = require('./lib/check-str-part-of-arr');
 
 var router = {
   path: './routes',
@@ -25,8 +27,7 @@ var router = {
                   .replace(this.path, '')
                   .replace('index.js', '')
                   .replace('.js', '');
-
-    if (routeFile.indexOf('/admin') > -1 || routeFile.indexOf('/api') > -1) {
+    if (checkStrPartOfArr(routeFile, ignoreI18nPath)) {
       this.app.use(routeFile, route);
     } else {
       // handle i18n
