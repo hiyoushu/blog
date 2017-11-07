@@ -10,6 +10,12 @@ var checkLogin = require('../../middlewares/check').checkLogin;
 
 /* GET home page */
 router.get('/', function(req, res, next) {
+  var lang = req.i18n.language;
+  var ROOT = '';
+  if (lang != 'zh-cn') {
+    ROOT = '/' + lang;
+  }
+
   Promise.all([
     Post.getPostsByPaging(10, 1),
     Tag.getAllTags(),
@@ -26,6 +32,7 @@ router.get('/', function(req, res, next) {
             archives = result[2];
 
         res.render('blog/index', {
+          ROOT: ROOT,
           title: 'test create',
           content: 'This is blog index page',
           tags: tags,
@@ -40,12 +47,19 @@ router.get('/', function(req, res, next) {
 
 // GET /:seoTitle get the post by seoTitle
 router.get('/:seoTitle', function(req, res, next) {
+  var lang = req.i18n.language;
+  var ROOT = '';
+  if (lang != 'zh-cn') {
+    ROOT = '/' + lang;
+  }
+
   Post.getPostBySeoTitle(req.params.seoTitle)
     .then(function (posts) {
       if (posts == null) {
         next();
       } else {
         res.render('blog/post', {
+          ROOT: ROOT,
           title: posts.title,
           content: posts.content
         });

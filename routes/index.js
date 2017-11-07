@@ -3,7 +3,16 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  var lang = req.i18n.language;
+  var ROOT = '';
+  if (lang != 'zh-cn') {
+    ROOT = '/' + lang;
+  }
+
+  res.render('index', {
+    ROOT: ROOT,
+    title: 'Express'
+  });
 });
 
 module.exports = router;

@@ -22,9 +22,9 @@ html(lang="zh-CN")
   body
     header.header
       section.header-section
-        a.logo(href="/") logo
+        a.logo(href="#{ROOT}/") logo
         nav.header-nav
-          a.nav-item(href="/blog")= t('blog.blog')
-          a.nav-item(href="/blog/tag")= t('blog.tag')
-          a.nav-item(href="/blog/archive")= t('blog.archive')
-          a.nav-item(href="/about")= t('blog.about')
+          a.nav-item(href="#{ROOT}/blog")= t('blog.blog')
+          a.nav-item(href="#{ROOT}/blog/tag")= t('blog.tag')
+          a.nav-item(href="#{ROOT}/blog/archive")= t('blog.archive')
+          a.nav-item(href="#{ROOT}/about")= t('blog.about')

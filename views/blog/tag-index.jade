@@ -7,6 +7,6 @@ main.wrapper
   ul
     each tagItem in tags
       li.post-item
-        a(href="/blog/tags/#{tagItem.tagName}")= tagItem.tagName
+        a(href="#{ROOT}/blog/tags/#{tagItem.tagName}")= tagItem.tagName
 
 include ../footer

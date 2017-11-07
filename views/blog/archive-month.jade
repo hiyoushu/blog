@@ -5,5 +5,5 @@ p #{content}
 ul
   each postItem in posts
     li.post-item
-      a(href="/blog/#{postItem.seoTitle}")= postItem.seoTitle
+      a(href="#{ROOT}/blog/#{postItem.seoTitle}")= postItem.seoTitle
 include ../footer

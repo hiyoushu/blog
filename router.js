@@ -26,7 +26,7 @@ var router = {
                   .replace('index.js', '')
                   .replace('.js', '');
 
-    if (routeFile == '/' || routeFile.indexOf('/about') > -1 || routeFile.indexOf('/admin') > -1 || routeFile.indexOf('/api') > -1) {
+    if (routeFile.indexOf('/admin') > -1 || routeFile.indexOf('/api') > -1) {
       this.app.use(routeFile, route);
     } else {
       // handle i18n
