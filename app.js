@@ -57,13 +57,16 @@ i18next
     detectLngQS: 'lang',
     languages: [
       'en',
-      'zh-CN',
       'zh',
+      'zh-CN',
+      'zh-HK',
+      'zh-TW',
+      'zh-SG',
     ],
     preload: [
       'en',
-      'zh-CN',
       'zh',
+      'zh-CN',
     ],
     lowerCaseLng: true,
     backend: {
