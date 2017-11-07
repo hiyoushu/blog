@@ -1,8 +1,11 @@
 include ../header
 
 style.
-  .post-list {
+  .manager-area {
     margin: 40px auto;
+  }
+  .post-list {
+    margin-bottom: 20px;
   }
   .section {
     width: 800px;
@@ -10,28 +13,46 @@ style.
   }
   .page-title {
     text-align: center;
+    margin-bottom: 40px;
+  }
+  .admin-button-l1 {
+    display: inline-block;
+    padding: 10px 20px;
+    border: 1px solid #09D0B2;
+    border-radius: 2px;
+    color: #09D0B2;
   }
   .admin-delete-post {
     margin-left: 20px;
     cursor: pointer;
+  }
+  .post-item {
+    padding: 8px 0;
+  }
+  .tag-item {
+    padding: 6px 0;
   }
 
 section.section
   h1.page-title this is admin index page
 
 section.section
-  a(href="post/create") write article
+  a.admin-button-l1(href="post/create") write article
 
-  .post-list
-    each postItem in posts
-      .post-item
-        a(href="/admin/post/edit/#{postItem._id}")= postItem.title
-        span.admin-delete-post(data-id="#{postItem._id}") 删除
+  .manager-area
+    h3 all posts
+    .post-list
+      each postItem in posts
+        .post-item
+          a(href="/admin/post/edit/#{postItem._id}")= postItem.title
+          span.admin-delete-post(data-id="#{postItem._id}") 删除
 
-  .tag-list
-    each tagItem in tags
-      .tag-item
-        a(href="/blog/tag/#{tagItem.tagName}")= tagItem.tagName
+  .manager-area
+    h3 all tags
+    .tag-list
+      each tagItem in tags
+        .tag-item
+          a(href="/blog/tag/#{tagItem.tagName}")= tagItem.tagName
 script.
   $('.admin-delete-post').on('click', function(){
     var $this = $(this);

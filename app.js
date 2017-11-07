@@ -8,6 +8,9 @@ var flash = require('connect-flash');
 var redis = require('redis');
 var redisStore = require('connect-redis')(session);
 var bodyParser = require('body-parser');
+var i18next = require('i18next');
+var i18nextFs = require('i18next-node-fs-backend');
+var i18nextmw = require('i18next-express-middleware');
 var config = require('./config');
 var router = require('./router');
 
@@ -43,6 +46,29 @@ app.use(session({
     maxAge: config.session.maxAge
   }
 }));
+
+// init i18next
+i18next
+  .use(i18nextmw.LanguageDetector)
+  .use(i18nextFs)
+  .init({
+    lng: 'zh-CN',
+    fallbackLng: 'en',
+    detectLngQS: 'lang',
+    languages: [
+      'en',
+      'zh-CN'
+    ],
+    preload: [
+      'en',
+      'zh-CN'
+    ],
+    lowerCaseLng: true,
+    backend: {
+      loadPath: path.resolve(__dirname, './locales/{{lng}}/{{ns}}.json')
+    }
+  });
+app.use(i18nextmw.handle(i18next));
 
 // load routes
 router.init(app);

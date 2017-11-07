@@ -8,7 +8,7 @@ var checkLogin = require('../../middlewares/check').checkLogin;
 
 // (how to get query string: req.query.foo)
 
-/* GET home page. */
+/* GET home page */
 router.get('/', function(req, res, next) {
   Promise.all([
     Post.getPostsByPaging(10, 1),
@@ -36,6 +36,7 @@ router.get('/', function(req, res, next) {
     })
     .catch(next);
 });
+
 
 // GET /:seoTitle get the post by seoTitle
 router.get('/:seoTitle', function(req, res, next) {

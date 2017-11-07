@@ -25,7 +25,28 @@ var router = {
                   .replace(this.path, '')
                   .replace('index.js', '')
                   .replace('.js', '');
-    this.app.use(routeFile, route);
+
+    if (routeFile == '/' || routeFile.indexOf('/about') > -1 || routeFile.indexOf('/admin') > -1 || routeFile.indexOf('/api') > -1) {
+      this.app.use(routeFile, route);
+    } else {
+      // handle i18n
+      this.app.use('/:lang' + routeFile, function (req, res, next) {
+        var lang = req.params.lang;
+        var currentLang = req.i18n.language;
+        var languages = req.i18n.languages;
+
+        if (lang != currentLang) {
+          if (languages.indexOf(lang) > -1) {
+            req.i18n.changeLanguage(lang);
+          }
+        }
+
+        next();
+      });
+
+      this.app.use(routeFile, route);
+      this.app.use('/:lang' + routeFile, route);
+    }
   },
   init: function(app, path){
     if(!app){

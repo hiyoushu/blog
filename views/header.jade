@@ -24,7 +24,7 @@ html(lang="zh-CN")
       section.header-section
         a.logo(href="/") logo
         nav.header-nav
-          a.nav-item(href="/blog") 博客
-          a.nav-item(href="/blog/tag") 标签
-          a.nav-item(href="/blog/archive") 存档
-          a.nav-item(href="/about") 关于
+          a.nav-item(href="/blog")= t('blog.blog')
+          a.nav-item(href="/blog/tag")= t('blog.tag')
+          a.nav-item(href="/blog/archive")= t('blog.archive')
+          a.nav-item(href="/about")= t('blog.about')
