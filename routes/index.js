@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
 
   res.render('index', {
     langPath: langPath,
-    title: 'Express'
+    title: 'Youshu'
   });
 });
 

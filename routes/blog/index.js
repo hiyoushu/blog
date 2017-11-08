@@ -31,7 +31,7 @@ router.get('/', function(req, res, next) {
 
         res.render('blog/index', {
           langPath: langPath,
-          title: 'test create',
+          title: 'Youshu Blog',
           content: 'This is blog index page',
           tags: tags,
           posts: posts,
