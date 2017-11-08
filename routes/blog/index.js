@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var getLangPath = require('../../lib/get-lang-path');
 
 var Post = require('../../services/post');
 var Tag = require('../../services/tag');
@@ -11,10 +12,7 @@ var checkLogin = require('../../middlewares/check').checkLogin;
 /* GET home page */
 router.get('/', function(req, res, next) {
   var lang = req.i18n.language;
-  var ROOT = '';
-  if (lang != 'zh-cn') {
-    ROOT = '/' + lang;
-  }
+  var langPath = getLangPath(lang);
 
   Promise.all([
     Post.getPostsByPaging(10, 1),
@@ -32,7 +30,7 @@ router.get('/', function(req, res, next) {
             archives = result[2];
 
         res.render('blog/index', {
-          ROOT: ROOT,
+          langPath: langPath,
           title: 'test create',
           content: 'This is blog index page',
           tags: tags,
@@ -48,10 +46,7 @@ router.get('/', function(req, res, next) {
 // GET /:seoTitle get the post by seoTitle
 router.get('/:seoTitle', function(req, res, next) {
   var lang = req.i18n.language;
-  var ROOT = '';
-  if (lang != 'zh-cn') {
-    ROOT = '/' + lang;
-  }
+  var langPath = getLangPath(lang);
 
   Post.getPostBySeoTitle(req.params.seoTitle)
     .then(function (posts) {
@@ -59,7 +54,7 @@ router.get('/:seoTitle', function(req, res, next) {
         next();
       } else {
         res.render('blog/post', {
-          ROOT: ROOT,
+          langPath: langPath,
           title: posts.title,
           content: posts.content
         });

@@ -1,14 +1,12 @@
 var express = require('express');
 var router = express.Router();
+var getLangPath = require('../../lib/get-lang-path');
 
 
-/* GET home page. */
+/* GET tag page */
 router.get('/', function(req, res, next) {
   var lang = req.i18n.language;
-  var ROOT = '';
-  if (lang != 'zh-cn') {
-    ROOT = '/' + lang;
-  }
+  var langPath = getLangPath(lang);
 
   var Tag = require('../../services/tag');
 
@@ -16,7 +14,7 @@ router.get('/', function(req, res, next) {
   Tag.getAllTags()
     .then(function(tags) {
       res.render('blog/tag-index', {
-        ROOT: ROOT,
+        langPath: langPath,
         title: 'tags',
         content: 'all tags',
         tags: tags
@@ -28,10 +26,7 @@ router.get('/', function(req, res, next) {
 // GET /:tagName get the posts by tagName
 router.get('/:tagName', function(req, res, next) {
   var lang = req.i18n.language;
-  var ROOT = '';
-  if (lang != 'zh-cn') {
-    ROOT = '/' + lang;
-  }
+  var langPath = getLangPath(lang);
 
   var Post = require('../../services/post');
 
@@ -41,7 +36,7 @@ router.get('/:tagName', function(req, res, next) {
         next();
       } else {
         res.render('blog/list', {
-          ROOT: ROOT,
+          langPath: langPath,
           title: 'posts of this tag',
           content: 'post about this tag',
           posts: posts

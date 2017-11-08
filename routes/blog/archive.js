@@ -1,21 +1,19 @@
 var express = require('express');
 var router = express.Router();
+var getLangPath = require('../../lib/get-lang-path');
 
 var Archive = require('../../services/archive');
 
-/* GET home page. */
+/* GET archive page */
 router.get('/', function(req, res, next) {
   var lang = req.i18n.language;
-  var ROOT = '';
-  if (lang != 'zh-cn') {
-    ROOT = '/' + lang;
-  }
+  var langPath = getLangPath(lang);
 
   Archive.getAllArchive()
     .then(function(archives) {
 
       res.render('blog/archive', {
-        ROOT: ROOT,
+        langPath: langPath,
         title: 'Archive',
         content: 'this is archive list',
         archives: archives,
@@ -27,15 +25,12 @@ router.get('/', function(req, res, next) {
 // GET specific archive
 router.get('/:year/:month', function(req, res, next) {
   var lang = req.i18n.language;
-  var ROOT = '';
-  if (lang != 'zh-cn') {
-    ROOT = '/' + lang;
-  }
+  var langPath = getLangPath(lang);
 
   Archive.getArchiveByMonth(req.params.year, req.params.month)
     .then(function(posts) {
       res.render('blog/archive-month', {
-        ROOT: ROOT,
+        langPath: langPath,
         title: 'Archive',
         content: 'this is archive list',
         posts: posts,

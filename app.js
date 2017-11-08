@@ -23,7 +23,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -55,25 +55,23 @@ i18next
     lng: 'zh-CN',
     fallbackLng: 'en',
     detectLngQS: 'lang',
-    languages: [
-      'en',
+    preload: [
       'zh',
       'zh-CN',
       'zh-HK',
       'zh-TW',
       'zh-SG',
-    ],
-    preload: [
       'en',
-      'zh',
-      'zh-CN',
     ],
     lowerCaseLng: true,
     backend: {
       loadPath: path.resolve(__dirname, './locales/{{lng}}/{{ns}}.json')
     }
   });
-app.use(i18nextmw.handle(i18next));
+app.use(i18nextmw.handle(i18next, {
+  ignoreRoutes: config.ignoreI18nPath,
+  // removeLngFromUrl: false
+}));
 
 // load routes
 router.init(app);

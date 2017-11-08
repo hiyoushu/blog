@@ -1,0 +1,5 @@
+# Robots.txt file from https://hiyoushu.com
+
+User-agent: *
+
+Disallow: /admin

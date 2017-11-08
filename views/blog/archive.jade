@@ -9,5 +9,5 @@ main.wrapper
         h3 #{archiveItem.year}
           - for (var [month, num] of archiveItem.months)
             p
-              a(href="#{ROOT}/blog/archive/#{archiveItem.year}/#{month}") #{archiveItem.year]年#{month}月
+              a(href="#{langPath}/blog/archive/#{archiveItem.year}/#{month}") #{archiveItem.year]年#{month}月
 include ../footer

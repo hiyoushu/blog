@@ -32,13 +32,19 @@ var router = {
     } else {
       // handle i18n
       this.app.use('/:lang' + routeFile, function (req, res, next) {
-        var lang = req.params.lang;
+        var lang = req.params.lang.toLowerCase();
         var currentLang = req.i18n.language;
-        var languages = req.i18n.languages;
+        var languages = req.i18n.options.preload.map(function(elem) {
+          return elem.toLowerCase();
+        });
 
         if (lang != currentLang) {
           if (languages.indexOf(lang) > -1) {
             req.i18n.changeLanguage(lang);
+          } else {
+            var err = new Error('Not Found');
+            err.status = 404;
+            next(err);
           }
         }
 
