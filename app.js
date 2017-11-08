@@ -63,7 +63,6 @@ i18next
       'zh-SG',
       'en',
     ],
-    lowerCaseLng: true,
     backend: {
       loadPath: path.resolve(__dirname, './locales/{{lng}}/{{ns}}.json')
     }
