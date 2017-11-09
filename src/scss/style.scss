@@ -62,8 +62,10 @@ a:visited {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
+  width: 71px;
   align-items: center;
   text-align: center;
+  background: url(../img/logo.png) no-repeat center center / 71px 16px;
 }
 .header-nav {
   display: -webkit-box;

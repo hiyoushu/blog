@@ -12,7 +12,7 @@ html(lang="zh-CN")
     //- inject:css
     link(rel="stylesheet", href="/css/font_8731fb6dba0ac87a508502f80e3f0f14.css")
     link(rel="stylesheet", href="/css/normalize_924cc62bda01ca298267563aa0a649b0.css")
-    link(rel="stylesheet", href="/css/style_bddaf223b5effab4c4c44681d0eb077f.css")
+    link(rel="stylesheet", href="/css/style_f2fec50a585b7f20fd7b3354e9d6d2db.css")
     //- endinject
     
     //- inject:js
@@ -22,8 +22,9 @@ html(lang="zh-CN")
   body
     header.header
       section.header-section
-        a.logo(href="#{langPath}/") logo
+        a.logo(href="#{langPath}/")
         nav.header-nav
+          a.nav-item(href="/")= t('home.home')
           a.nav-item(href="#{langPath}/blog")= t('blog.blog')
           a.nav-item(href="#{langPath}/blog/tag")= t('blog.tag')
           a.nav-item(href="#{langPath}/blog/archive")= t('blog.archive')

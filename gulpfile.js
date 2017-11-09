@@ -59,7 +59,7 @@ gulp.task('images', function() {
 
 gulp.task('clean', function() {
   // return del(['public/css', 'public/js', 'public/images']);
-  return del(['public/css', 'public/js']);
+  return del(['public/css/*', 'public/js/*']);
 });
 
 gulp.task('watch', function() {
@@ -84,11 +84,20 @@ gulp.task('watch', function() {
 gulp.task('inject-header', ['styles', 'scripts'], function() {
   var sourcesBlog = gulp.src(['./public/js/*.js', './public/css/*.css', '!./public/css/admin*.css'], {read: false});
   var sourcesAdmin = gulp.src(['./public/js/*.js', './public/css/*.css'], {read: false});
+  var sourcesIndex = gulp.src(['./public/js/common.js', './public/css/*.css', '!./public/css/admin*.css'], {read: false});
   // var sourcesCss = gulp.src(['./src/**/common.js', './src/**/common.css'], {read: false});
 
-  gulp.src('./views/admin-header.jade')
+  // inject admin header
+  gulp.src('./views/admin/header.jade')
     .pipe(inject(sourcesAdmin, {ignorePath: 'public/'}))
+    .pipe(gulp.dest('./views/admin'))
+    .pipe(notify({ message: 'inject admin header complete' }));
+
+  // inject index
+  gulp.src('./views/index.jade')
+    .pipe(inject(sourcesIndex, {ignorePath: 'public/'}))
     .pipe(gulp.dest('./views'))
+    .pipe(notify({ message: 'inject index complete' }));
 
   return gulp.src('./views/header.jade')
     .pipe(inject(sourcesBlog, {ignorePath: 'public/'}))
