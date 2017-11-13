@@ -22,10 +22,10 @@ a {
   color: #555;
 }
 a:hover {
-  color: #09D0B2;
+  color: $green;
 }
 a:active {
-  color: #09D0B2;
+  color: $green;
 }
 a:visited {
 }
@@ -34,6 +34,12 @@ a:visited {
 .wrapper {
   max-width: 960px;
   margin: auto;
+}
+.fl {
+  float: left;
+}
+.fr {
+  float: right;
 }
 
 
@@ -120,8 +126,24 @@ a:visited {
   width: 220px;
   padding: 10px;
 }
+.index-postlist-footer {
+  overflow: hidden;
+  margin: 20px auto;
+}
 .post-item {
   border-bottom: 1px solid #eee;
+}
+.post-page-btn {
+  display: block;
+  width: 120px;
+  height: 48px;
+  border: 1px solid #eee;
+  line-height: 48px;
+  text-align: center;
+}
+.post-page-btn:hover {
+  border: 1px solid $green;
+  color: $green;
 }
 @media screen and (max-width: 960px) {
   .index-main {

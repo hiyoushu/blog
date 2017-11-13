@@ -18,6 +18,7 @@ router.get('/', function(req, res, next) {
     Post.getPostsByPaging(10, 1),
     Tag.getAllTags(),
     Archive.getAllArchive(),
+    Post.getPostAmount(),
   ])
     .then(function(result) {
         
@@ -27,7 +28,18 @@ router.get('/', function(req, res, next) {
 
         var posts = result[0],
             tags = result[1],
-            archives = result[2];
+            archives = result[2],
+            amount = result[3];
+
+        var nextPage, prevPage;
+
+        if (amount <= 10) {
+          nextPage = 0;
+        } else {
+          nextPage = 2;
+        }
+
+        prevPage = 0;
 
         res.render('blog/index', {
           langPath: langPath,
@@ -36,6 +48,68 @@ router.get('/', function(req, res, next) {
           tags: tags,
           posts: posts,
           archives: archives,
+          prevPage: prevPage,
+          nextPage: nextPage,
+          pageNum: 1,
+        });
+      }
+    })
+    .catch(next);
+});
+
+
+/* GET home post list by page */
+router.get('/page/:pageNum', function(req, res, next) {
+  var lang = req.i18n.language;
+  var langPath = getLangPath(lang);
+
+  var pageNum = req.params.pageNum ? parseInt(req.params.pageNum, 10) : 1;
+
+  Promise.all([
+    Post.getPostsByPaging(10, pageNum),
+    Tag.getAllTags(),
+    Archive.getAllArchive(),
+    Post.getPostAmount(),
+  ])
+    .then(function(result) {
+        
+      if (result == null) {
+        next();
+      } else {
+
+        var posts = result[0],
+            tags = result[1],
+            archives = result[2],
+            amount = result[3];
+
+        if (posts.length == 0) {
+          next();
+        }
+
+        var nextPage, prevPage;
+
+        if (amount <= 10 * pageNum) {
+          nextPage = 0;
+        } else {
+          nextPage = pageNum + 1;
+        }
+
+        if (pageNum == 1) {
+          prevPage = 0;
+        } else {
+          prevPage = pageNum - 1;
+        }
+
+        res.render('blog/index', {
+          langPath: langPath,
+          title: 'Page '+ pageNum +' - Youshu Blog',
+          content: 'This is blog index page',
+          tags: tags,
+          posts: posts,
+          archives: archives,
+          prevPage: prevPage,
+          nextPage: nextPage,
+          pageNum: pageNum,
         });
       }
     })

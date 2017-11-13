@@ -28,6 +28,12 @@ a:active {
   max-width: 960px;
   margin: auto; }
 
+.fl {
+  float: left; }
+
+.fr {
+  float: right; }
+
 /*
  * green colors #3bb1a0 #51d8c5 #22c3aa #00ad93 #00d1b2 #51d8c5
  * nav text hover #09D0B2
@@ -107,8 +113,24 @@ a:active {
   width: 220px;
   padding: 10px; }
 
+.index-postlist-footer {
+  overflow: hidden;
+  margin: 20px auto; }
+
 .post-item {
   border-bottom: 1px solid #eee; }
+
+.post-page-btn {
+  display: block;
+  width: 120px;
+  height: 48px;
+  border: 1px solid #eee;
+  line-height: 48px;
+  text-align: center; }
+
+.post-page-btn:hover {
+  border: 1px solid #09D0B2;
+  color: #09D0B2; }
 
 @media screen and (max-width: 960px) {
   .index-main {

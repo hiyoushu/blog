@@ -127,7 +127,16 @@ module.exports = {
     return Post
       .remove({ _id: postId })
       .exec();
-  }
+  },
+
+  // get post count
+  getPostAmount: function () {
+    return Post
+      .count({})
+      .exec();
+  },
+
+
 
   // transform content of post from markdown to html
   // postSchema.plugin('contentToHtml', {

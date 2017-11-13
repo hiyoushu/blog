@@ -7,6 +7,8 @@
     "lang": "English",
     "tag": "Tag",
     "archive": "Archive",
-    "about": "About"
+    "about": "About",
+    "nextPage": "Older Posts",
+    "prevPage": "Newer Posts"
   }
 }

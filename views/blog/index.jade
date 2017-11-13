@@ -11,7 +11,13 @@ main
               h2.index-post-title= postItem.title
               p.index-post-intro!= postItem.intro
       .index-postlist-footer
-        a(href="#{langPath}/blog/page/2") older posts
+        if prevPage != 0
+          a.post-page-btn.fl(href="#{langPath}/blog/page/#{prevPage}")= t('blog.prevPage')
+        else if pageNum == 2
+          a.post-page-btn.fl(href="#{langPath}/blog")= t('blog.prevPage')
+        
+        if nextPage != 0
+          a.post-page-btn.fr(href="#{langPath}/blog/page/#{nextPage}")= t('blog.nextPage')
 
     section.index-aside
       .tag-list
