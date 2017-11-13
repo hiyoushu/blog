@@ -1,4 +1,33 @@
+// color
 $green: #09D0B2;
+
+// break point
+$break-small: 360px;
+$break-medium: 768px;
+$break-large: 960px;
+$break-cover-img-large: 840px;
+$break-article-medium: 740px;
+
+@mixin screen ($breakPoint) {
+  @if $breakPoint == small {
+    @media screen and (max-width: $break-small) { @content; }
+  }
+  @if $breakPoint == medium {
+    @media screen and (max-width: $break-medium) { @content; }
+  }
+  @if $breakPoint == large {
+    @media screen and (max-width: $break-large) { @content; }
+  }
+  @if $breakPoint == coverMedium {
+    @media screen and (max-width: $break-cover-img-large) { @content; }
+  }
+  @if $breakPoint == articleMedium {
+    @media screen and (max-width: $break-article-medium) { @content; }
+  }
+}
+
+
+@import "normalize.scss";
 
 *, :after, :before{
   box-sizing: inherit;
@@ -114,17 +143,30 @@ a:visited {
   width: 960px;
   margin: auto;
   display: flex;
+
+  @include screen(large) {
+    width: 100%;
+  }
+  @include screen(medium) {
+    flex-wrap: wrap;
+  }
 }
+  
 .index-postlist {
   flex: 1;
   padding-right: 20px;
 }
+
 .index-post-title {
   margin-bottom: 10px;
 }
 .index-aside {
   width: 220px;
   padding: 10px;
+
+  @include screen(medium) {
+    width: 100%;
+  }
 }
 .index-postlist-footer {
   overflow: hidden;
@@ -145,20 +187,6 @@ a:visited {
   border: 1px solid $green;
   color: $green;
 }
-@media screen and (max-width: 960px) {
-  .index-main {
-    width: 100%;
-  }
-}
-@media screen and (max-width: 768px) {
-  .index-main {
-    flex-wrap: wrap;
-  }
-
-  .index-aside {
-    width: 100%;
-  }
-}
 
 /* login */
 .login-wrapper {
@@ -172,6 +200,10 @@ a:visited {
 .post-cover {
   width: 840px;
   margin: 40px auto;
+
+  @include screen (coverMedium) {
+    width: 100%;
+  }
 }
 .post-cover-img {
   display: block;
@@ -181,17 +213,13 @@ a:visited {
   width: 740px;
   margin: auto;
   padding: 20px;
-}
-@media screen and (max-width: 840px) {
-  .post-cover {
+
+  @include screen (articleMedium) {
     width: 100%;
   }
 }
-@media screen and (max-width: 740px) {
-  .post-article {
-    width: 100%;
-  }
-}
+
+  
 
 
 

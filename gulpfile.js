@@ -20,7 +20,7 @@ gulp.task('default', ['clean'], function() {
 });
 
 gulp.task('sass', function() {
-  return gulp.src('src/scss/*.scss')
+  return gulp.src(['./src/scss/*.scss', '!./src/scss/normalize.scss'])
     .pipe(sass().on('error', sass.logError))
     .pipe(gulp.dest('src/css'))
     .pipe(notify({ message: 'Sass task complete' }));
