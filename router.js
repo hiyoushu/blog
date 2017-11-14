@@ -27,6 +27,7 @@ var router = {
                   .replace(this.path, '')
                   .replace('index.js', '')
                   .replace('.js', '');
+
     if (checkStrPartOfArr(routeFile, ignoreI18nPath)) {
       this.app.use(routeFile, route);
     } else {

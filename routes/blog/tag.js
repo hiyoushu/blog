@@ -15,7 +15,7 @@ router.get('/', function(req, res, next) {
     .then(function(tags) {
       res.render('blog/tag-index', {
         langPath: langPath,
-        title: 'tags',
+        title: req.i18n.t('blog.tag') +' - Youshu',
         content: 'all tags',
         tags: tags
       });
@@ -25,8 +25,10 @@ router.get('/', function(req, res, next) {
 
 // GET /:tagName get the posts by tagName
 router.get('/:tagName', function(req, res, next) {
+  console.log(111111111111111)
   var lang = req.i18n.language;
   var langPath = getLangPath(lang);
+  console.log(langPath)
 
   var Post = require('../../services/post');
 
@@ -37,7 +39,7 @@ router.get('/:tagName', function(req, res, next) {
       } else {
         res.render('blog/list', {
           langPath: langPath,
-          title: 'posts of this tag',
+          title: req.params.tagName +' - '+ req.i18n.t('blog.tag') +' - Youshu',
           content: 'post about this tag',
           posts: posts
         });

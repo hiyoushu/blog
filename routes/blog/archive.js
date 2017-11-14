@@ -14,7 +14,7 @@ router.get('/', function(req, res, next) {
 
       res.render('blog/archive', {
         langPath: langPath,
-        title: 'Archive',
+        title: req.i18n.t('blog.archive') +' - Youshu',
         content: 'this is archive list',
         archives: archives,
       });
@@ -31,7 +31,7 @@ router.get('/:year/:month', function(req, res, next) {
     .then(function(posts) {
       res.render('blog/archive-month', {
         langPath: langPath,
-        title: 'Archive',
+        title: req.params.month +' - '+ req.params.year +' - '+ req.i18n.t('blog.archive') + ' - Youshu',
         content: 'this is archive list',
         posts: posts,
       });
