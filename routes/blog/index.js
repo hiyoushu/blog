@@ -44,7 +44,7 @@ router.get('/', function(req, res, next) {
 
         res.render('blog/index', {
           langPath: langPath,
-          title: 'Blog - '+ siteName,
+          title: req.i18n.t('blog.blog') +' - '+ siteName,
           content: 'This is blog index page',
           tags: tags,
           posts: posts,
@@ -103,7 +103,7 @@ router.get('/page/:pageNum', function(req, res, next) {
 
         res.render('blog/index', {
           langPath: langPath,
-          title: 'Page '+ pageNum +' - Blog - '+ siteName,
+          title: 'Page '+ pageNum +' - '+ req.i18n.t('blog.blog') +' - '+ siteName,
           content: 'This is blog index page',
           tags: tags,
           posts: posts,

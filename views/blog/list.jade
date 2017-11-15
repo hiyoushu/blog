@@ -1,10 +1,11 @@
 include ../header
 
-h1 #{title}
-p !{content}
-ul
-  each postItem in posts
-    li.post-item
-      a(href="#{langPath}/blog/#{postItem.seoTitle}")= postItem.seoTitle
+main.wrapper
+  h1 #{title}
+  p !{content}
+  ul
+    each postItem in posts
+      li.post-item
+        a(href="#{langPath}/blog/#{postItem.seoTitle}")= postItem.seoTitle
 
 include ../footer
