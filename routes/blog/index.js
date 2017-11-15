@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var getLangPath = require('../../lib/get-lang-path');
+var siteName = require('../../config.js').site.siteName;
 
 var Post = require('../../services/post');
 var Tag = require('../../services/tag');
@@ -43,7 +44,7 @@ router.get('/', function(req, res, next) {
 
         res.render('blog/index', {
           langPath: langPath,
-          title: 'Youshu Blog',
+          title: 'Blog - '+ siteName,
           content: 'This is blog index page',
           tags: tags,
           posts: posts,
@@ -102,7 +103,7 @@ router.get('/page/:pageNum', function(req, res, next) {
 
         res.render('blog/index', {
           langPath: langPath,
-          title: 'Page '+ pageNum +' - Youshu Blog',
+          title: 'Page '+ pageNum +' - Blog - '+ siteName,
           content: 'This is blog index page',
           tags: tags,
           posts: posts,

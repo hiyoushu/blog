@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var getLangPath = require('../../lib/get-lang-path');
+var siteName = require('../../config.js').site.siteName;
 
 
 /* GET tag page */
@@ -15,7 +16,7 @@ router.get('/', function(req, res, next) {
     .then(function(tags) {
       res.render('blog/tag-index', {
         langPath: langPath,
-        title: req.i18n.t('blog.tag') +' - Youshu',
+        title: req.i18n.t('blog.tag') +' - '+ siteName,
         content: 'all tags',
         tags: tags
       });
@@ -39,7 +40,7 @@ router.get('/:tagName', function(req, res, next) {
       } else {
         res.render('blog/list', {
           langPath: langPath,
-          title: req.params.tagName +' - '+ req.i18n.t('blog.tag') +' - Youshu',
+          title: req.params.tagName +' - '+ req.i18n.t('blog.tag') +' - '+ siteName,
           content: 'post about this tag',
           posts: posts
         });

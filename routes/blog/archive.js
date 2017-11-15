@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var getLangPath = require('../../lib/get-lang-path');
+var siteName = require('../../config.js').site.siteName;
 
 var Archive = require('../../services/archive');
 
@@ -14,7 +15,7 @@ router.get('/', function(req, res, next) {
 
       res.render('blog/archive', {
         langPath: langPath,
-        title: req.i18n.t('blog.archive') +' - Youshu',
+        title: req.i18n.t('blog.archive') +' - '+ siteName,
         content: 'this is archive list',
         archives: archives,
       });
@@ -31,7 +32,7 @@ router.get('/:year/:month', function(req, res, next) {
     .then(function(posts) {
       res.render('blog/archive-month', {
         langPath: langPath,
-        title: req.params.month +' - '+ req.params.year +' - '+ req.i18n.t('blog.archive') + ' - Youshu',
+        title: req.params.month +' - '+ req.params.year +' - '+ req.i18n.t('blog.archive') + ' - '+ siteName,
         content: 'this is archive list',
         posts: posts,
       });
