@@ -55,20 +55,13 @@ i18next
     lng: 'zh-CN',
     fallbackLng: 'en',
     detectLngQS: 'lang',
-    preload: [
-      'zh',
-      'zh-CN',
-      'zh-HK',
-      'zh-TW',
-      'zh-SG',
-      'en',
-    ],
+    preload: config.i18n.languages,
     backend: {
       loadPath: path.resolve(__dirname, './locales/{{lng}}/{{ns}}.json')
     }
   });
 app.use(i18nextmw.handle(i18next, {
-  ignoreRoutes: config.ignoreI18nPath,
+  ignoreRoutes: config.i18n.ignoreI18nPath,
   // removeLngFromUrl: false
 }));
 

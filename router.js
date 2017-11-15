@@ -3,7 +3,7 @@
  */
 
 var fs = require('fs');
-var ignoreI18nPath = require('./config').ignoreI18nPath;
+var ignoreI18nPath = require('./config').i18n.ignoreI18nPath;
 var checkStrPartOfArr = require('./lib/check-str-part-of-arr');
 
 var router = {
