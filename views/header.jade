@@ -2,8 +2,8 @@ doctype html
 html(lang="zh-CN")
   head
     meta(charset="utf-8")
-    meta(http-equiv="X-UA-Compatible", content="IE=edge,chrome=1")
     meta(name="renderer", content="webkit")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge,chrome=1")
     meta(name="viewport", content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
     meta(name="apple-mobile-web-app-capable", content="yes")
     meta(name="apple-mobile-web-app-status-bar-style", content="black")
@@ -11,7 +11,7 @@ html(lang="zh-CN")
     title= title
     //- inject:css
     link(rel="stylesheet", href="/css/font_1479ab280f8e3f241ac65ef47ed309e4.css")
-    link(rel="stylesheet", href="/css/style_974f275f330e7f091e56b2447b73a4b0.css")
+    link(rel="stylesheet", href="/css/style_7cd841a64439ebe86d702a4d899a933a.css")
     //- endinject
     
     //- inject:js
@@ -23,8 +23,25 @@ html(lang="zh-CN")
       section.header-section
         a.logo(href="#{langPath}/")
         nav.header-nav
-          a.nav-item(href="/")= t('home.home')
-          a.nav-item(href="#{langPath}/blog")= t('blog.blog')
-          a.nav-item(href="#{langPath}/blog/tag")= t('blog.tag')
-          a.nav-item(href="#{langPath}/blog/archive")= t('blog.archive')
-          a.nav-item(href="#{langPath}/about")= t('blog.about')
+          .header-nav-normal
+            a.nav-item(href="/")= t('home.home')
+            a.nav-item(href="#{langPath}/blog")= t('blog.blog')
+            a.nav-item(href="#{langPath}/blog/tag")= t('blog.tag')
+            a.nav-item(href="#{langPath}/blog/archive")= t('blog.archive')
+            a.nav-item(href="#{langPath}/about")= t('blog.about')
+          .header-lang
+            span.nav-item Language
+            ul.header-lang-list
+              li
+                a(href="") 简体中文
+              li
+                a(href="") 繁体中文
+              li
+                a(href="") English
+        .header-mobile-nav
+          span.header-mobile-line.header-mobile-line-top
+            span.header-mobile-line-entity
+          span.header-mobile-line.header-mobile-line-center
+            span.header-mobile-line-entity
+          span.header-mobile-line.header-mobile-line-bottom
+            span.header-mobile-line-entity

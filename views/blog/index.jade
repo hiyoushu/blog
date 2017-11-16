@@ -1,9 +1,11 @@
 include ../header
-main
+main.wrapper
   .index-title
-    h1 #{title}
+    //- h1 #{content}
+    h1 index page
   .index-main
     section.index-postlist
+      //- h2 最新文章
       ul
         each postItem in posts
           li.post-item
@@ -21,17 +23,20 @@ main
 
     section.index-aside
       .tag-list
-        h3
-          a(href="#{langPath}/blog/tag") tags
+        h2
+          a(href="#{langPath}/blog/tag")= t('blog.tag')
         each tagItem in tags
           .tag-item
             a(href="#{langPath}/blog/tag/#{tagItem.tagName}")= tagItem.tagName
-      ul
-        each archiveItem in archives
-          li.archive-item
-            h3 #{archiveItem.year}
-            - for (var [month, num] of archiveItem.months)
-              p
-                a(href="#{langPath}/blog/archive/#{archiveItem.year}/#{month}") #{archiveItem.year]年#{month}月
+      .archive-list
+        h2
+          a(href="#{langPath}/blog/archive")= t('blog.archive')
+        ul
+          each archiveItem in archives
+            li.archive-item
+              h3 #{archiveItem.year}
+              - for (var [month, num] of archiveItem.months)
+                p.archive-month-item
+                  a(href="#{langPath}/blog/archive/#{archiveItem.year}/#{month}") #{archiveItem.year]年#{month}月
 
 include ../footer

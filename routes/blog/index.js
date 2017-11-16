@@ -45,7 +45,7 @@ router.get('/', function(req, res, next) {
         res.render('blog/index', {
           langPath: langPath,
           title: req.i18n.t('blog.blog') +' - '+ siteName,
-          content: 'This is blog index page',
+          content: siteName +' '+ req.i18n.t('blog.blog'),
           tags: tags,
           posts: posts,
           archives: archives,
@@ -130,7 +130,7 @@ router.get('/:seoTitle', function(req, res, next) {
       } else {
         res.render('blog/post', {
           langPath: langPath,
-          title: posts.title,
+          title: posts.title +' - '+ siteName,
           content: posts.content
         });
       }
