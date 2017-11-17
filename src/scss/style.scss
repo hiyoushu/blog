@@ -220,25 +220,28 @@ a:visited {
     transition: opacity 0.35s ease-out, transform 0.35s ease-out;
   }
 }
-.header-nav.active .nav-item {
-  opacity: 1;
-  transform: none;
+@include screen(smallPlus) {
+  .header-nav.active .nav-item {
+    opacity: 1;
+    transform: none;
+  }
+  .header-nav-normal .nav-item:nth-child(1) {
+    transition-delay: .3s;
+  }
+  .header-nav-normal .nav-item:nth-child(2) {
+    transition-delay: .35s;
+  }
+  .header-nav-normal .nav-item:nth-child(3) {
+    transition-delay: .4s;
+  }
+  .header-nav-normal .nav-item:nth-child(4) {
+    transition-delay: .45s;
+  }
+  .header-nav-normal .nav-item:nth-child(5) {
+    transition-delay: .5s;
+  }
 }
-.header-nav-normal .nav-item:nth-child(1) {
-  transition-delay: .3s;
-}
-.header-nav-normal .nav-item:nth-child(2) {
-  transition-delay: .35s;
-}
-.header-nav-normal .nav-item:nth-child(3) {
-  transition-delay: .4s;
-}
-.header-nav-normal .nav-item:nth-child(4) {
-  transition-delay: .45s;
-}
-.header-nav-normal .nav-item:nth-child(5) {
-  transition-delay: .5s;
-}
+  
 .header-mobile-nav {
   @include header-nav;
 
@@ -288,7 +291,7 @@ a:visited {
   position: absolute;
   left: 8px;
   z-index: 1;
-  transition: transform 0.2s, opacity 0.2s;
+  transition: transform 0.2s ease-in, opacity 0.2s ease-in;
 
   .header-mobile-nav.active .header-mobile-line-top & {
     transform: rotate(45deg);
@@ -303,6 +306,12 @@ a:visited {
 .header-lang {
   @include header-nav;
 
+  .nav-item {
+    cursor: pointer;
+    border-bottom: none;
+    user-select: none;
+  }
+
   @include screen(smallPlus) {
     flex-direction: column;
 
@@ -313,6 +322,18 @@ a:visited {
 }
 .header-lang-list {
   display: none;
+
+  &.active {
+    display: block;
+    position: absolute;
+    top: 48px;
+    width: 100px;
+    border: 1px solid $light-gray;
+  }
+  &.active .lang-item {
+    padding: 10px;
+    text-align: center;
+  }
 
   @include screen(smallPlus) {
     display: block;
@@ -336,6 +357,9 @@ a:visited {
       transition-delay: .7s;
     }
   }
+}
+.lang-item > a {
+  display: block;
 }
 .header-nav.active .lang-item {
   opacity: 1;

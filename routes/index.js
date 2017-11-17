@@ -7,9 +7,12 @@ router.get('/', function(req, res, next) {
   var lang = req.i18n.language;
   var langPath = getLangPath(lang);
 
+  var urlWithoutLang = req.baseUrl.replace('/'+ lang, '');
+
   res.render('index', {
     langPath: langPath,
-    title: 'Youshu'
+    title: 'Youshu',
+    originPath: urlWithoutLang,
   });
 });
 

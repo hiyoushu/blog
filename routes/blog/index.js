@@ -15,6 +15,8 @@ router.get('/', function(req, res, next) {
   var lang = req.i18n.language;
   var langPath = getLangPath(lang);
 
+  var urlWithoutLang = req.baseUrl.replace('/'+ lang, '');
+
   Promise.all([
     Post.getPostsByPaging(10, 1),
     Tag.getAllTags(),
@@ -52,6 +54,7 @@ router.get('/', function(req, res, next) {
           prevPage: prevPage,
           nextPage: nextPage,
           pageNum: 1,
+          originPath: urlWithoutLang,
         });
       }
     })
@@ -63,6 +66,8 @@ router.get('/', function(req, res, next) {
 router.get('/page/:pageNum', function(req, res, next) {
   var lang = req.i18n.language;
   var langPath = getLangPath(lang);
+
+  var urlWithoutLang = req.baseUrl.replace('/'+ lang, '');
 
   var pageNum = req.params.pageNum ? parseInt(req.params.pageNum, 10) : 1;
 
@@ -111,6 +116,7 @@ router.get('/page/:pageNum', function(req, res, next) {
           prevPage: prevPage,
           nextPage: nextPage,
           pageNum: pageNum,
+          originPath: urlWithoutLang,
         });
       }
     })
@@ -123,6 +129,8 @@ router.get('/:seoTitle', function(req, res, next) {
   var lang = req.i18n.language;
   var langPath = getLangPath(lang);
 
+  var urlWithoutLang = req.baseUrl.replace('/'+ lang, '');
+
   Post.getPostBySeoTitle(req.params.seoTitle)
     .then(function (posts) {
       if (posts == null) {
@@ -131,7 +139,8 @@ router.get('/:seoTitle', function(req, res, next) {
         res.render('blog/post', {
           langPath: langPath,
           title: posts.title +' - '+ siteName,
-          content: posts.content
+          content: posts.content,
+          originPath: urlWithoutLang,
         });
       }
     })

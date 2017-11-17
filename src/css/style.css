@@ -554,24 +554,20 @@ a:active, a:focus {
       transform: scale(1.1) translate(30px, -24px);
       transition: opacity 0.35s ease-out, transform 0.35s ease-out; } }
 
-.header-nav.active .nav-item {
-  opacity: 1;
-  transform: none; }
-
-.header-nav-normal .nav-item:nth-child(1) {
-  transition-delay: .3s; }
-
-.header-nav-normal .nav-item:nth-child(2) {
-  transition-delay: .35s; }
-
-.header-nav-normal .nav-item:nth-child(3) {
-  transition-delay: .4s; }
-
-.header-nav-normal .nav-item:nth-child(4) {
-  transition-delay: .45s; }
-
-.header-nav-normal .nav-item:nth-child(5) {
-  transition-delay: .5s; }
+@media screen and (max-width: 414px) {
+  .header-nav.active .nav-item {
+    opacity: 1;
+    transform: none; }
+  .header-nav-normal .nav-item:nth-child(1) {
+    transition-delay: .3s; }
+  .header-nav-normal .nav-item:nth-child(2) {
+    transition-delay: .35s; }
+  .header-nav-normal .nav-item:nth-child(3) {
+    transition-delay: .4s; }
+  .header-nav-normal .nav-item:nth-child(4) {
+    transition-delay: .45s; }
+  .header-nav-normal .nav-item:nth-child(5) {
+    transition-delay: .5s; } }
 
 .header-mobile-nav {
   display: flex;
@@ -618,7 +614,7 @@ a:active, a:focus {
   position: absolute;
   left: 8px;
   z-index: 1;
-  transition: transform 0.2s, opacity 0.2s; }
+  transition: transform 0.2s ease-in, opacity 0.2s ease-in; }
   .header-mobile-nav.active .header-mobile-line-top .header-mobile-line-entity {
     transform: rotate(45deg); }
   .header-mobile-nav.active .header-mobile-line-center .header-mobile-line-entity {
@@ -630,6 +626,10 @@ a:active, a:focus {
   display: flex;
   justify-content: flex-end;
   align-items: stretch; }
+  .header-lang .nav-item {
+    cursor: pointer;
+    border-bottom: none;
+    user-select: none; }
   @media screen and (max-width: 414px) {
     .header-lang {
       flex-direction: column; }
@@ -638,6 +638,15 @@ a:active, a:focus {
 
 .header-lang-list {
   display: none; }
+  .header-lang-list.active {
+    display: block;
+    position: absolute;
+    top: 48px;
+    width: 100px;
+    border: 1px solid #f6f6f6; }
+  .header-lang-list.active .lang-item {
+    padding: 10px;
+    text-align: center; }
   @media screen and (max-width: 414px) {
     .header-lang-list {
       display: block; }
@@ -654,6 +663,9 @@ a:active, a:focus {
         transition-delay: .65s; }
       .header-lang-list .lang-item:nth-child(3) {
         transition-delay: .7s; } }
+
+.lang-item > a {
+  display: block; }
 
 .header-nav.active .lang-item {
   opacity: 1;

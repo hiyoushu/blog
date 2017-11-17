@@ -7,11 +7,17 @@ showConsoleMsg();
 
 
 $(function() {
-  // header nav
+  // mobile view switch header nav
   $('#js-switch-nav').on('click', function(event) {
     var $this = $(this);
     $this.toggleClass('active');
     $('#js-header').toggleClass('active');
     $('#js-header-nav').toggleClass('active');
+  });
+
+  // switch language
+  $('#js-switch-lang').on('click', function(event) {
+    var $this = $(this);
+    $this.siblings('.header-lang-list').toggleClass('active');
   });
 })

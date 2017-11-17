@@ -11,12 +11,12 @@ html(lang="zh-CN")
     title= title
     //- inject:css
     link(rel="stylesheet", href="/css/font_1479ab280f8e3f241ac65ef47ed309e4.css")
-    link(rel="stylesheet", href="/css/style_792a99df564fb2eca254f2e815f48c6c.css")
+    link(rel="stylesheet", href="/css/style_817010318fa19588e6baa059b767bca8.css")
     //- endinject
     
     //- inject:js
     script(src="/js/jquery-3.2.1_be1bac2e55e8c79fe4aa515a509ad2e8.js")
-    script(src="/js/common_71994437bdf24cf8c30dc7640839dfd9.js")
+    script(src="/js/common_f28425473947b350f0f03a97adc08b4f.js")
     //- endinject
   body
     header#js-header.header
@@ -30,14 +30,14 @@ html(lang="zh-CN")
             a.nav-item(href="#{langPath}/blog/archive")= t('blog.archive')
             a.nav-item(href="#{langPath}/about")= t('blog.about')
           .header-lang
-            span.nav-item Language
+            span#js-switch-lang.nav-item Language
             ul.header-lang-list
               li.lang-item
-                a(href="") English
+                a(href="/en#{originPath}") English
               li.lang-item
-                a(href="") 简体中文
+                a(href="#{originPath}") 简体中文
               li.lang-item
-                a(href="") 繁體中文
+                a(href="/zh-hk#{originPath}") 繁體中文
         #js-switch-nav.header-mobile-nav
           span.header-mobile-line.header-mobile-line-top
             span.header-mobile-line-entity

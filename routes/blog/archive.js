@@ -10,6 +10,8 @@ router.get('/', function(req, res, next) {
   var lang = req.i18n.language;
   var langPath = getLangPath(lang);
 
+  var urlWithoutLang = req.baseUrl.replace('/'+ lang, '');
+
   Archive.getAllArchive()
     .then(function(archives) {
 
@@ -18,6 +20,7 @@ router.get('/', function(req, res, next) {
         title: req.i18n.t('blog.archive') +' - '+ siteName,
         content: 'this is archive list',
         archives: archives,
+        originPath: urlWithoutLang,
       });
     })
     .catch(next);
@@ -28,6 +31,8 @@ router.get('/:year/:month', function(req, res, next) {
   var lang = req.i18n.language;
   var langPath = getLangPath(lang);
 
+  var urlWithoutLang = req.baseUrl.replace('/'+ lang, '');
+
   Archive.getArchiveByMonth(req.params.year, req.params.month)
     .then(function(posts) {
       res.render('blog/archive-month', {
@@ -35,6 +40,7 @@ router.get('/:year/:month', function(req, res, next) {
         title: req.params.month +' - '+ req.params.year +' - '+ req.i18n.t('blog.archive') + ' - '+ siteName,
         content: 'this is archive list',
         posts: posts,
+        originPath: urlWithoutLang,
       });
     })
     .catch(next);

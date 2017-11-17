@@ -11,6 +11,7 @@ router.get('/', function(req, res, next) {
 
   var Tag = require('../../services/tag');
 
+  var urlWithoutLang = req.baseUrl.replace('/'+ lang, '');
 
   Tag.getAllTags()
     .then(function(tags) {
@@ -18,7 +19,8 @@ router.get('/', function(req, res, next) {
         langPath: langPath,
         title: req.i18n.t('blog.tag') +' - '+ siteName,
         content: 'all tags',
-        tags: tags
+        tags: tags,
+        originPath: urlWithoutLang,
       });
     })
     .catch(next);
@@ -26,12 +28,12 @@ router.get('/', function(req, res, next) {
 
 // GET /:tagName get the posts by tagName
 router.get('/:tagName', function(req, res, next) {
-  console.log(111111111111111)
   var lang = req.i18n.language;
   var langPath = getLangPath(lang);
-  console.log(langPath)
 
   var Post = require('../../services/post');
+
+  var urlWithoutLang = req.baseUrl.replace('/'+ lang, '');
 
   Post.getByTagName(req.params.tagName)
     .then(function (posts) {
@@ -42,7 +44,8 @@ router.get('/:tagName', function(req, res, next) {
           langPath: langPath,
           title: req.params.tagName +' - '+ req.i18n.t('blog.tag') +' - '+ siteName,
           content: 'post about this tag',
-          posts: posts
+          posts: posts,
+          originPath: urlWithoutLang,
         });
       }
     })
