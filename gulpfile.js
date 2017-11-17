@@ -38,7 +38,7 @@ gulp.task('styles', ['sass'], function() {
 });
 
 gulp.task('scripts', function() {
-  return gulp.src('src/js/**/*.js')
+  return gulp.src(['src/js/jquery-3.2.1.js', 'src/js/**/*.js'])
     // .pipe(jshint('.jshintrc'))
     // .pipe(jshint.reporter('default'))
     // .pipe(concat('main.js'))
@@ -82,8 +82,8 @@ gulp.task('watch', function() {
 });
 
 gulp.task('inject-header', ['styles', 'scripts'], function() {
-  var sourcesBlog = gulp.src(['./public/js/*.js', './public/css/*.css', '!./public/css/admin*.css'], {read: false});
-  var sourcesAdmin = gulp.src(['./public/js/*.js', './public/css/*.css'], {read: false});
+  var sourcesBlog = gulp.src(['./public/js/jquery*.js', './public/js/*.js', './public/css/*.css', '!./public/css/admin*.css'], {read: false});
+  var sourcesAdmin = gulp.src(['./public/js/jquery*.js', './public/js/*.js', './public/css/*.css'], {read: false});
   var sourcesIndex = gulp.src(['./public/js/common.js', './public/css/*.css', '!./public/css/admin*.css'], {read: false});
   // var sourcesCss = gulp.src(['./src/**/common.js', './src/**/common.css'], {read: false});
 
