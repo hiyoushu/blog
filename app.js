@@ -78,7 +78,7 @@ app.use(function(req, res, next) {
 // error handler
 app.use(function(err, req, res, next) {
   var getLangPath = require('./lib/get-lang-path');
-  var lang = req.i18n.language ? req.i18n.language : 'zh-CN';
+  var lang = req.i18n ? req.i18n.language : 'zh-CN';
   var langPath = getLangPath(lang);
 
   // set locals, only providing error in development
