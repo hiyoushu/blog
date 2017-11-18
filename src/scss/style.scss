@@ -339,7 +339,10 @@ a:visited {
 }
 .header-lang-list {
   display: none;
-  background: #fff;
+  
+  @include screen(biggerPlus) {
+    background: #fff;
+  }
 
   &.active {
     display: block;

@@ -647,8 +647,10 @@ a:active, a:focus {
     display: none; } }
 
 .header-lang-list {
-  display: none;
-  background: #fff; }
+  display: none; }
+  @media screen and (min-width: 414px) {
+    .header-lang-list {
+      background: #fff; } }
   .header-lang-list.active {
     display: block;
     position: absolute;
