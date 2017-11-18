@@ -688,6 +688,8 @@ a:active, a:focus {
 
 .lang-item > a {
   display: block; }
+  .lang-item > a.active {
+    color: #09D0B2; }
 
 .header-nav.active .lang-item {
   opacity: 1;

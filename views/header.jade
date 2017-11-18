@@ -11,7 +11,7 @@ html(lang="zh-CN")
     title= title
     //- inject:css
     link(rel="stylesheet", href="/css/font_1479ab280f8e3f241ac65ef47ed309e4.css")
-    link(rel="stylesheet", href="/css/style_b3e0cd6aa477c1c2f4ad374db5127bc8.css")
+    link(rel="stylesheet", href="/css/style_40d66ced17da7ef4561a38f222f12bc0.css")
     //- endinject
     
     //- inject:js
@@ -32,12 +32,26 @@ html(lang="zh-CN")
           .header-lang
             span#js-switch-lang.nav-item Language
             ul.header-lang-list
-              li.lang-item
-                a(href="/en#{originPath}") English
-              li.lang-item
-                a(href="#{originPath}") 简体中文
-              li.lang-item
-                a(href="/zh-hk#{originPath}") 繁體中文
+              if langPath == '/en'
+                li.lang-item
+                  a.active(href="/en#{originPath}") English
+              else
+                li.lang-item
+                  a(href="/en#{originPath}") English
+
+              if langPath == ''
+                li.lang-item
+                  a.active(href="#{originPath}") 简体中文
+              else
+                li.lang-item
+                  a(href="#{originPath}") 简体中文
+
+              if langPath == '/zh-hant'
+                li.lang-item
+                  a.active(href="/zh-hant#{originPath}") 繁體中文
+              else
+                li.lang-item
+                  a(href="/zh-hant#{originPath}") 繁體中文
         #js-switch-nav.header-mobile-nav
           span.header-mobile-line.header-mobile-line-top
             span.header-mobile-line-entity
