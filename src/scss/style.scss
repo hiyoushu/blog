@@ -25,6 +25,9 @@ $break-article-medium: 740px;
   @else if $breakPoint == smallPlus {
     @media screen and (max-width: $break-iphone-plus) { @content; }
   }
+  @else if $breakPoint == biggerPlus {
+    @media screen and (min-width: $break-iphone-plus) { @content; }
+  }
   @else if $breakPoint == medium {
     @media screen and (max-width: $break-pad) { @content; }
   }
@@ -318,6 +321,9 @@ a:visited {
   }
 }
 .header-lang {
+  @include screen(biggerPlus) {
+    @include header-nav;
+  }
 
   .nav-item {
     cursor: pointer;
@@ -333,6 +339,7 @@ a:visited {
 }
 .header-lang-list {
   display: none;
+  background: #fff;
 
   &.active {
     display: block;
