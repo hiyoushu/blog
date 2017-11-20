@@ -23,40 +23,90 @@ style.
     color: #09D0B2;
   }
   .admin-delete-post {
+    visibility: hidden;
     margin-left: 20px;
     cursor: pointer;
   }
   .post-item {
     padding: 8px 0;
   }
+  .post-item:hover .admin-delete-post {
+    visibility: visible;
+  }
   .tag-item {
     padding: 6px 0;
   }
+  .admin-delete-tag {
+    visibility: hidden;
+    margin-left: 20px;
+    cursor: pointer;
+    color: #09D0B2;
+  }
+  .tag-item:hover .admin-delete-tag {
+    visibility: visible;
+  }
 
-section.section
-  h1.page-title this is admin index page
+  .add-tag-wrapper .add-tag-content {
+    display: none;
+  }
+  .add-tag-wrapper.active .add-tag-content {
+    display: block;
+  }
 
-section.section
-  a.admin-button-l1(href="post/create") write article
+  .add-tag-btn {
+    color: #09D0B2;
+    cursor: pointer;
+  }
+  .add-tag-wrapper.active .add-tag-btn {
+    display: none;
+  }
+  .add-tag-content span {
+    margin-left: 16px;
+    cursor: pointer;
+  }
+  .add-tag-confirm {
+    color: #09D0B2;
+  }
 
-  .manager-area
-    h3 all posts
-    .post-list
-      each postItem in posts
-        .post-item
-          a(href="/admin/post/edit/#{postItem._id}")= postItem.title
-          span.admin-delete-post(data-id="#{postItem._id}") 删除
+main.wrapper
+  section.section
+    h1.page-title this is admin index page
 
-  .manager-area
-    h3 all tags
-    .tag-list
-      each tagItem in tags
-        .tag-item
-          a(href="/blog/tag/#{tagItem.tagName}")= tagItem.tagName
+  section.section
+    a.admin-button-l1(href="post/create") write article
+
+    .manager-area
+      h3 all posts
+      .post-list
+        each postItem in posts
+          .post-item
+            a(href="/admin/post/edit/#{postItem._id}")= postItem.title
+            span.admin-delete-post(data-id="#{postItem._id}") 删除
+
+    .manager-area
+      h3 all tags
+      .tag-list
+        each tagItem in tags
+          .tag-item
+            a(href="/blog/tag/#{tagItem.tagName}")= tagItem.tagName
+            span.admin-delete-tag(data-id="#{tagItem._id}") 删除
+
+        .tag-item.add-tag-wrapper
+          span.add-tag-btn 添加标签
+          span.add-tag-content
+            input#add-tag-input
+            span.add-tag-confirm 确定
+            span.add-tag-cancel 取消
 script.
+  //- delete post
   $('.admin-delete-post').on('click', function(){
     var $this = $(this);
     var _id = $this.data('id');
+
+    if (!confirm('are you sure to delete this post?')) {
+      return;
+    }
+
     $.ajax({
       url: '/api/post/'+ _id,
       type: 'DELETE',
@@ -75,5 +125,76 @@ script.
       alert( "error" );
     })
   });
+
+  //- create tag
+  $('.add-tag-btn').on('click', function(){
+    var $parent = $(this).parent('.add-tag-wrapper');
+    $parent.addClass('active');
+  })
+  $('.add-tag-cancel').on('click', function(){
+    var $parent = $(this).parents('.add-tag-wrapper');
+    $parent.removeClass('active');
+  })
+  $('.add-tag-confirm').on('click', function(){
+    var $this = $(this);
+    var $parent = $(this).parents('.add-tag-wrapper');
+    var $tagName = $('#add-tag-input');
+    var tagName = $tagName.val().trim();
+
+    if (tagName == '') {
+      return false;
+    }
+
+    $.ajax({
+      url: '/api/tag/'+ tagName,
+      type: 'POST',
+      headers: {
+        'X-Token': ''
+      }
+    })
+    .done(function(data) {
+      if (data.code == 10001) {
+        var _html = '<div class="tag-item"><a href="/blog/tag/'+ tagName +'">'+ tagName +'</a><span data-id="'+ data.data._id +'" class="admin-delete-tag">删除</span></div>';
+        $parent.before(_html);
+
+        $parent.removeClass('active');
+        $tagName.val('');
+      } else {
+        alert(data.message);
+      }
+    })
+    .fail(function(error) {
+      alert( "error" );
+    })
+  });
+
+  //- delete tag
+  $('.admin-delete-tag').on('click', function(){
+    var $this = $(this);
+    var _id = $this.data('id');
+
+    if (!confirm('are you sure to delete this tag?')) {
+      return;
+    }
+
+    $.ajax({
+      url: '/api/tag/'+ _id,
+      type: 'DELETE',
+      headers: {
+        'X-Token': ''
+      }
+    })
+    .done(function(data) {
+      if (data.code == 10001) {
+        $this.parents('.tag-item').remove();
+      } else {
+        alert(data.message);
+      }
+    })
+    .fail(function(error) {
+      alert( "error" );
+    })
+  });
+
 
 include ../footer

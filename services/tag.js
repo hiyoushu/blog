@@ -17,4 +17,11 @@ module.exports = {
   getByTagName: function(tagName) {
     return Tag.find({tagName: tagName}).exec();
   },
+
+  // delete tag by tagId
+  deleteTagById: function (tagId) {
+    return Tag
+      .remove({ _id: tagId })
+      .exec();
+  },
 }
