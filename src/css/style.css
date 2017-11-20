@@ -805,3 +805,11 @@ a:active, a:focus {
     .post-article {
       width: 100%;
       padding: 0; } }
+
+/* comment */
+.comment {
+  width: 700px;
+  margin: 40px auto 20px; }
+  @media screen and (max-width: 960px) {
+    .comment {
+      width: 100%; } }

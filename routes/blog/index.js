@@ -140,6 +140,7 @@ router.get('/:seoTitle', function(req, res, next) {
           langPath: langPath,
           title: posts.title +' - '+ siteName,
           content: posts.content,
+          postId: posts._id,
           originPath: urlWithoutLang,
         });
       }
