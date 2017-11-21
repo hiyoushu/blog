@@ -108,7 +108,7 @@ script.
     }
 
     $.ajax({
-      url: '/api/post/'+ _id,
+      url: '/api/posts/'+ _id,
       type: 'DELETE',
       headers: {
         'X-Token': ''
@@ -146,21 +146,31 @@ script.
     }
 
     $.ajax({
-      url: '/api/tag/'+ tagName,
+      url: '/api/tags/',
       type: 'POST',
       headers: {
         'X-Token': ''
+      },
+      data: {
+        tagName: tagName
       }
     })
-    .done(function(data) {
-      if (data.code == 10001) {
-        var _html = '<div class="tag-item"><a href="/blog/tag/'+ tagName +'">'+ tagName +'</a><span data-id="'+ data.data._id +'" class="admin-delete-tag">删除</span></div>';
-        $parent.before(_html);
+    .done(function(data, statusText, xhr) {
+      switch (xhr.status) {
+        case 201:
+          var _html = '<div class="tag-item"><a href="/blog/tag/'+ tagName +'">'+ tagName +'</a><span data-id="'+ data.data._id +'" class="admin-delete-tag">删除</span></div>';
+          $parent.before(_html);
 
-        $parent.removeClass('active');
-        $tagName.val('');
-      } else {
-        alert(data.message);
+          $parent.removeClass('active');
+          $tagName.val('');
+          break;
+        
+        case 400:
+          alert(data.error)
+          break;
+
+        default:
+          alert('can not handle this status code!'); 
       }
     })
     .fail(function(error) {
@@ -178,17 +188,24 @@ script.
     }
 
     $.ajax({
-      url: '/api/tag/'+ _id,
+      url: '/api/tags/'+ _id,
       type: 'DELETE',
       headers: {
         'X-Token': ''
       }
     })
-    .done(function(data) {
-      if (data.code == 10001) {
-        $this.parents('.tag-item').remove();
-      } else {
-        alert(data.message);
+    .done(function(data, statusText, xhr) {
+      switch (xhr.status) {
+        case 204:
+          $this.parents('.tag-item').remove();
+          break;
+
+        case 400:
+          alert(data.error)
+          break;
+
+        default:
+          alert('can not handle this status code!');
       }
     })
     .fail(function(error) {

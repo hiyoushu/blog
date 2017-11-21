@@ -32,8 +32,8 @@ main.wrapper
       .post-edit
         input(name="tag", placeholder="标签", value="#{post.tag}")
       .post-edit
-          input#upload-file(type="file", accept=".jpeg, .jpg, .png", placeholder="上传题图")
-          input#coverImg(name="coverImg", type="hidden")
+        input#upload-file(type="file", accept=".jpeg, .jpg, .png", placeholder="上传题图")
+        input#coverImg(name="coverImg", type="hidden")
       .post-edit
         textarea.container(contenteditable="true", name="content", placeholder="内容") #{post.content}
       .post-edit

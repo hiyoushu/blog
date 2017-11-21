@@ -6,37 +6,41 @@ var Tag = require('../../services/tag');
 // var checkLogin = require('../../middlewares/check').checkLogin;
 var token = require('../../middlewares/token').check;
 
-// POST /:tagName create a post
-router.post('/:tagName', token, function(req, res, next) {
-  var tagName = req.params.tagName;
-  var tag = {
-    tagName: tagName
-  };
+// POST / create a tag
+router.post('/', token, function(req, res, next) {
+  var tag = req.body;
 
   Tag.create(tag)
     .then(function (result) {
       if (result) {
-        res.json({code: 10001, message: 'created', data: result});
+        res
+          .status(201)
+          .json({code: 10001, message: 'created', data: result});
       } else {
-        res.json({code: 10002, message: 'error'});
+        res
+          .status(400)
+          .json({code: 10002, message: 'error', error: 'create failed!'});
       }
     })
     .catch(next);
 });
 
 
-// DELETE /:tagId  remove a post
+// DELETE /:tagId  remove a tag
 router.delete('/:tagId', token, function(req, res, next) {
   var tagId = req.params.tagId;
 
   Tag.deleteTagById(tagId)
     .then(function (result) {
       if (result.result.ok == 1) {
-        res.json({code: 10001, message: 'deleted'});
+        res
+          .status(204)
+          .json({code: 10001, message: 'deleted'});
       } else {
-        res.json({code: 10002, message: 'error'});
+        res
+          .status(400)
+          .json({code: 10002, message: 'error', error: 'delete failed!'});
       }
-      
     })
     .catch(next);
 });

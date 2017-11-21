@@ -37,9 +37,10 @@ main.wrapper
       .post-edit
         textarea.container(contenteditable="true", name="content", placeholder="内容")
       .post-edit
-        input(type="submit")
+        input#submit-post(type="submit")
 
 script.
+  //- 上传题图
   $('#upload-file').on('change', function(){
     var $this = $(this);
     var file = $this.prop('files');
@@ -72,5 +73,10 @@ script.
       console.log(error);
     });
   });
+
+  //- 保存文章
+  $('#submit-post').on('click', function(event){
+    event.preventDefault();
+  })
 
 include ../footer
