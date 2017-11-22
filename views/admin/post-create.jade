@@ -24,7 +24,7 @@ main.wrapper
     h1 create post
     p you can write content below
   section.post-form
-    form(method="post" action="create")
+    form#form(method="post" action="create")
       .post-edit
         input(name="title", placeholder="标题")
       .post-edit
@@ -77,6 +77,40 @@ script.
   //- 保存文章
   $('#submit-post').on('click', function(event){
     event.preventDefault();
+    var data = {};
+
+    $('#form').serializeArray().forEach(function(value, index, array){
+      data[value.name] = value.value
+    });
+    console.log(data)
+
+    $.ajax({
+      url: '/api/posts',
+      type: 'POST',
+      data: data,
+      headers: {
+        'X-Token': ''
+      }
+    })
+    .done(function (data, statusText, xhr){
+      switch (xhr.status) {
+        case 201:
+          alert(data.message);
+          break;
+
+        case 400:
+          alert(data.error);
+          break;
+
+        default:
+      }
+    })
+    .fail(function (error){
+      if(error.status = 500) {
+        alert('server error');
+      }
+      console.log(error);
+    });
   })
 
 include ../footer

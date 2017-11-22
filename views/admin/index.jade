@@ -73,7 +73,7 @@ main.wrapper
     h1.page-title this is admin index page
 
   section.section
-    a.admin-button-l1(href="post/create") write article
+    a.admin-button-l1(href="./post/create") write article
 
     .manager-area
       h3 all posts
@@ -114,11 +114,17 @@ script.
         'X-Token': ''
       }
     })
-    .done(function(data) {
-      if (data.code == 10001) {
-        $this.parents('.post-item').remove();
-      } else {
-        alert(data.message);
+    .done(function(data, statusText, xhr) {
+      switch (xhr.status) {
+        case 204:
+          $this.parents('.post-item').remove();
+          break;
+
+        case 400:
+          alert(data.error)
+          break;
+
+        default:
       }
     })
     .fail(function(error) {
@@ -146,7 +152,7 @@ script.
     }
 
     $.ajax({
-      url: '/api/tags/',
+      url: '/api/tags',
       type: 'POST',
       headers: {
         'X-Token': ''

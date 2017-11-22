@@ -8,7 +8,51 @@ var token = require('../../middlewares/token').check;
 
 // POST /:postId delete post
 router.post('/', token, function(req, res, next) {
-  var post = req.body;
+  var author = req.session.user._id,
+      title = req.body.title,
+      content = req.body.content,
+      seoTitle = req.body.seoTitle,
+      tag = req.body.tag,
+      type = req.body.type,
+      titleImage = req.body.coverImg;
+  
+  // default params
+  if (!type) {
+    type = 'html';
+  }
+
+  if (!titleImage) {
+    titleImage = '';
+  }
+
+  // validate params
+  try {
+    if (!title.length) {
+      throw new Error('please input title');
+    }
+    if (!content.length) {
+      throw new Error('please input content');
+    }
+  } catch (e) {
+    req.flash('error', e.message);
+    return res.redirect('back');
+  }
+
+  var post = {
+    title: title,
+    seoTitle: seoTitle,
+    author: author,
+    content: content,
+    tag: tag,
+    type: type,
+    createTime: Date.now(),
+    updateTime: Date.now(),
+    state: 'published',
+    canComment: true,
+    titleImage: titleImage,
+    isTitleImageFullScreen: false,
+    pv: 0
+  };
 
   Post.create(post)
     .then(function (result) {
