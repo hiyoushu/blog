@@ -97,6 +97,8 @@ main.wrapper
             input#add-tag-input
             span.add-tag-confirm 确定
             span.add-tag-cancel 取消
+
+input#jwt-token(type="hidden", value="#{session.token}")
 script.
   //- delete post
   $('.admin-delete-post').on('click', function(){

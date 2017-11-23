@@ -23,6 +23,8 @@ router.get('/', checkAdmin, checkLogin, function(req, res, next) {
         var posts = result[0],
             tags = result[1],
             archives = result[2];
+            
+        res.locals.session = req.session;
         res.render('admin/index', {
           title: 'admin index page',
           posts: posts,

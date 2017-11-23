@@ -8,7 +8,7 @@ $(function () {
   if (token) {
     $.ajaxSetup({
       headers: {
-        'x-token': token
+        'X-Token': token
       }
     });
   }
