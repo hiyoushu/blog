@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var config = require('../../config');
 var sha1 = require('sha1');
+var jwt = require('jsonwebtoken');
 var User = require('../../services/user');
 var checkNotLogin = require('../../middlewares/check').checkNotLogin;
 var checkAdmin = require('../../middlewares/check').checkAdmin;
@@ -27,15 +28,27 @@ router.post('/', checkAdmin, checkNotLogin, function(req, res, next) {
         req.flash('error', 'user does not dexist');
         return res.redirect('back');
       }
+
       // check if the name and password match
       if (sha1(password) !== user.password) {
         req.flash('error', 'name or password does not match');
         return res.redirect('back');
       }
       req.flash('success', 'success');
+
       // write user info to session
       delete user.password;
       req.session.user = user;
+
+      // sign in jwt
+      req.session.token = jwt.sign({
+        sub: user._id,
+        data: {
+          id: user._id,
+          name: user.name
+        }
+      }, config.jwt.secret, { expiresIn: config.jwt.expire });
+
       // redirect
       if (redirectURL != '' && redirectURL != undefined) {
         res.redirect(redirectURL);

@@ -12,12 +12,14 @@ router.get('/', checkAdmin, checkLogin,function(req, res, next) {
 
 // GET /post/create create post page
 router.get('/create', checkAdmin, checkLogin, function(req, res, next) {
-  res.render('admin/post-create', { title: 'create post hiyoushu' });
+  res.locals.session = req.session;
+  res.render('admin/post-create', { title: 'create post' });
 });
 
 
 // GET /post/edit edit post page
 router.get('/edit/:postId', checkAdmin, checkLogin, function(req, res, next) {
+  res.locals.session = req.session;
   var postId = req.params.postId;
   Post.getPostById(postId)
     .then(function(post) {

@@ -154,9 +154,6 @@ script.
     $.ajax({
       url: '/api/tags',
       type: 'POST',
-      headers: {
-        'X-Token': ''
-      },
       data: {
         tagName: tagName
       }
@@ -196,9 +193,6 @@ script.
     $.ajax({
       url: '/api/tags/'+ _id,
       type: 'DELETE',
-      headers: {
-        'X-Token': ''
-      }
     })
     .done(function(data, statusText, xhr) {
       switch (xhr.status) {

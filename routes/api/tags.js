@@ -4,10 +4,10 @@ var router = express.Router();
 var config = require('../../config');
 var Tag = require('../../services/tag');
 // var checkLogin = require('../../middlewares/check').checkLogin;
-var token = require('../../middlewares/token').check;
+var token = require('../../middlewares/token');
 
 // POST / create a tag
-router.post('/', token, function(req, res, next) {
+router.post('/', token.check, function(req, res, next) {
   var tag = req.body;
 
   Tag.create(tag)
@@ -27,7 +27,7 @@ router.post('/', token, function(req, res, next) {
 
 
 // DELETE /:tagId  remove a tag
-router.delete('/:tagId', token, function(req, res, next) {
+router.delete('/:tagId', token.check, function(req, res, next) {
   var tagId = req.params.tagId;
 
   Tag.deleteTagById(tagId)

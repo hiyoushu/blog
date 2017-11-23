@@ -37,8 +37,9 @@ main.wrapper
       .post-edit
         textarea.container(contenteditable="true", name="content", placeholder="内容")
       .post-edit
+        input(type="hidden", name="userId", value="#{session.user._id}")
         input#submit-post(type="submit")
-
+input#jwt-token(type="hidden", value="#{session.token}")
 script.
   //- 上传题图
   $('#upload-file').on('change', function(){
@@ -82,15 +83,11 @@ script.
     $('#form').serializeArray().forEach(function(value, index, array){
       data[value.name] = value.value
     });
-    console.log(data)
 
     $.ajax({
       url: '/api/posts',
       type: 'POST',
       data: data,
-      headers: {
-        'X-Token': ''
-      }
     })
     .done(function (data, statusText, xhr){
       switch (xhr.status) {
@@ -98,18 +95,16 @@ script.
           alert(data.message);
           break;
 
-        case 400:
-          alert(data.error);
-          break;
-
         default:
       }
     })
     .fail(function (error){
-      if(error.status = 500) {
+      if(error.status == 500) {
         alert('server error');
+      } else if (error.status == 400) {
+        alert(error.responseJSON.error);
       }
-      console.log(error);
+      //- console.log(error);
     });
   })
 

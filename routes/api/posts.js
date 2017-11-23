@@ -3,18 +3,19 @@ var router = express.Router();
 
 var config = require('../../config');
 var Post = require('../../services/post');
-// var checkLogin = require('../../middlewares/check').checkLogin;
-var token = require('../../middlewares/token').check;
+var token = require('../../middlewares/token');
 
-// POST /:postId delete post
-router.post('/', token, function(req, res, next) {
-  var author = req.session.user._id,
+// POST / delete post
+router.post('/', token.check, function(req, res, next) {
+  var author = req.body.userId,
       title = req.body.title,
       content = req.body.content,
       seoTitle = req.body.seoTitle,
       tag = req.body.tag,
       type = req.body.type,
       titleImage = req.body.coverImg;
+
+  console.log(req)
   
   // default params
   if (!type) {
@@ -26,17 +27,22 @@ router.post('/', token, function(req, res, next) {
   }
 
   // validate params
-  try {
-    if (!title.length) {
-      throw new Error('please input title');
-    }
-    if (!content.length) {
-      throw new Error('please input content');
-    }
-  } catch (e) {
-    req.flash('error', e.message);
-    return res.redirect('back');
+  if (!author) {
+    return res
+            .status(400)
+            .json({code: 10002, message: 'error', error: 'please input author!'});
   }
+  if (!title.length) {
+    return res
+            .status(400)
+            .json({code: 10002, message: 'error', error: 'please input title!'});
+  }
+  if (!content.length) {
+    return res
+            .status(400)
+            .json({code: 10002, message: 'error', error: 'please input content!'});
+  }
+  
 
   var post = {
     title: title,
@@ -70,7 +76,7 @@ router.post('/', token, function(req, res, next) {
 });
 
 // DELETE /:postId delete post
-router.delete('/:postId', token, function(req, res, next) {
+router.delete('/:postId', token.check, function(req, res, next) {
   var postId = req.params.postId;
 
   Post.deletePostById(postId)
