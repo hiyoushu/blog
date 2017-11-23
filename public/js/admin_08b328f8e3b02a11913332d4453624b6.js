@@ -1,0 +1,1 @@
+var token=window.localStorage.getItem("token");token&&$.ajaxSetup({headers:{"x-access-token":token}});
