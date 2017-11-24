@@ -41,7 +41,7 @@ main.wrapper
         input#submit-post(type="submit")
 input#jwt-token(type="hidden", value="#{session.token}")
 script.
-  //- 上传题图
+  //- upload cover image
   $('#upload-file').on('change', function(){
     var $this = $(this);
     var file = $this.prop('files');
@@ -75,7 +75,7 @@ script.
     });
   });
 
-  //- 保存文章
+  //- save post
   $('#submit-post').on('click', function(event){
     event.preventDefault();
     var data = {};

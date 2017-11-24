@@ -24,7 +24,7 @@ main.wrapper
     h1 create post
     p you can edit content below
   section.post-form
-    form(method="post")
+    form#form(method="post")
       .post-edit
         input(name="title", placeholder="标题", value="#{post.title}")
       .post-edit
@@ -37,9 +37,13 @@ main.wrapper
       .post-edit
         textarea.container(contenteditable="true", name="content", placeholder="内容") #{post.content}
       .post-edit
-        input(type="submit")
+        input(type="hidden", name="userId", value="#{session.user._id}")
+        input(type="hidden", name="postId", value="#{post._id}")
+        input#submit-post(type="submit")
 
+input#jwt-token(type="hidden", value="#{session.token}")
 script.
+  //- upload cover image
   $('#upload-file').on('change', function(){
     var $this = $(this);
     var file = $this.prop('files');
@@ -72,5 +76,38 @@ script.
       console.log(error);
     });
   });
+
+  //- update post
+  $('#submit-post').on('click', function(event){
+    event.preventDefault();
+    var data = {};
+
+    $('#form').serializeArray().forEach(function(value, index, array){
+      data[value.name] = value.value
+    });
+
+    $.ajax({
+      url: '/api/posts/'+ data.postId,
+      type: 'PUT',
+      data: data,
+    })
+    .done(function (data, statusText, xhr){
+      switch (xhr.status) {
+        case 201:
+          alert(data.message);
+          break;
+
+        default:
+      }
+    })
+    .fail(function (error){
+      if(error.status == 500) {
+        alert('server error');
+      } else if (error.status == 400) {
+        alert(error.responseJSON.error);
+      }
+      //- console.log(error);
+    });
+  })
 
 include ../footer

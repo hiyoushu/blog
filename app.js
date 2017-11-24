@@ -80,6 +80,7 @@ app.use(function(err, req, res, next) {
   var getLangPath = require('./lib/get-lang-path');
   var lang = req.i18n ? req.i18n.language : 'zh-CN';
   var langPath = getLangPath(lang);
+  var urlWithoutLang = req.baseUrl.replace('/'+ lang.toLowerCase(), '');
 
   // set locals, only providing error in development
   res.locals.message = err.message;
@@ -89,9 +90,13 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
 
   if (err.status == 404) {
-    res.render('404', {langPath: langPath});
+    if (req.i18n) {
+      res.render('404', {langPath: langPath, originPath: urlWithoutLang});
+    } else {
+      res.render('404-without-i18n', {langPath: langPath, originPath: urlWithoutLang});
+    }
   } else {
-    res.render('error', {langPath: langPath});
+    res.render('error', {langPath: langPath, originPath: urlWithoutLang});
   }
 });
 

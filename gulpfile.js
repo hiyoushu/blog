@@ -99,6 +99,12 @@ gulp.task('inject-header', ['styles', 'scripts'], function() {
     .pipe(gulp.dest('./views'))
     .pipe(notify({ message: 'inject index complete' }));
 
+  // inject header without i18n
+  gulp.src('./views/header-without-i18n.jade')
+    .pipe(inject(sourcesBlog, {ignorePath: 'public/'}))
+    .pipe(gulp.dest('./views'))
+    .pipe(notify({ message: 'inject header without i18n complete' }))
+
   return gulp.src('./views/header.jade')
     .pipe(inject(sourcesBlog, {ignorePath: 'public/'}))
     .pipe(gulp.dest('./views'))

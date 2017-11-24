@@ -76,8 +76,8 @@ router.post('/', token.check, function(req, res, next) {
 
 
 // PUT / update a post
-router.put('/', token.check, function(req, res, next) {
-  var postId = req.body.postId,
+router.put('/:postId', token.check, function(req, res, next) {
+  var postId = req.params.postId,
       author = req.body.userId,
       title = req.body.title,
       content = req.body.content,
@@ -97,6 +97,11 @@ router.put('/', token.check, function(req, res, next) {
   }
 
   // validate params
+  if (!postId) {
+    return res
+            .status(400)
+            .json({code: 10002, message: 'error', error: 'please input post id!'});
+  }
   if (!author) {
     return res
             .status(400)
