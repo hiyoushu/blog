@@ -118,7 +118,8 @@ module.exports = {
   // update post by Id
   updatePostById: function (postId, data) {
     return Post
-      .update({_id: postId }, { $set: data })
+      .update({ _id: postId }, { $set: data })
+      .findOne({ _id: postId })
       .exec();
   },
 
