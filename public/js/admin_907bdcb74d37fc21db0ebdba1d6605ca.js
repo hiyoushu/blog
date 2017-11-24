@@ -1,1 +1,0 @@
-$(function(){if($("#jwt-token").length>0)var e=$("#jwt-token").val();else var e=window.localStorage.getItem("token");e&&$.ajaxSetup({headers:{"X-Token":e}})});

@@ -4,7 +4,8 @@ var config = require('../config');
 var tokenMiddleware = {};
 
 tokenMiddleware.check = function(req, res, next) {
-  var token = req.headers['X-Token'] || '';
+  var token = req.headers['x-token'] || '';
+
   jwt.verify(token, config.jwt.secret, function(err, decoded) {
     if (err) {
       return res
