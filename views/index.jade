@@ -20,20 +20,41 @@ html(lang="zh-CN")
       html{
         width: 100%;
         height: 100%;
-        //- background: #fff url(/img/index-bg.png) no-repeat center center fixed;
+        background: #fff url(/img/index-bg-blue-large.jpg) no-repeat center center fixed;
+        //- color: #2d9be6, #08c6c0, #18b3d1
         -webkit-background-size: cover;
         background-size: cover;
         -webkit-font-smoothing:antialiased;
       }
-      h1, p, li{text-align:center; color: #333;}
+      h1, p, li{text-align:center; color: #fff;}
       li {list-style: none;}
       h1{font-size: 50px; }
-      p{font-size: 20px; color: #46a9d1;}
+      p{
+        font-size: 20px;
+        //- color: #46a9d1;
+        color: #fff;
+      }
+      canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      .container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 999;
+        width: 100%;
+        height: 100%;
+      }
       .index{margin-top: 200px;}
       .links{width: 320px; margin: 60px auto; font-size: 1.2em; line-height: 1.8;}
       .links a{
         font-size: 22px;
-        color: #333;
+        color: #fff;
         -webkit-transition: all 0.3s ease-out;
         transition: all 0.3s ease-out;
       }
@@ -55,15 +76,18 @@ html(lang="zh-CN")
       }
 
       @media (max-width: 767px){
+        html {
+          background: #fff url(/img/index-bg-blue-small.jpg) no-repeat center center cover;
+        }
         h1{
           font-size: 40px;
         }
         p{font-size: 16px;}
         .index{
-          margin-top: 50px;
+          margin-top: 80px;
         }
       }
-  body
+  body#body
     .container
       .viewport.index
         h1 YOU SHU
@@ -78,4 +102,28 @@ html(lang="zh-CN")
           li
             a(href="/about") About
 
-    include analytic
+  script.
+    var nodeBody = document.getElementById('body');
+    var canvas = document.createElement('canvas');
+    var width = window.innerWidth;
+    var height = window.innerHeight;
+    var pr = window.devicePixelRatio || 1;
+
+    canvas.width = width * pr;
+    canvas.height = height * pr;
+
+    function draw() {
+    }
+
+    var ctx = canvas.getContext('2d');
+    //- draw();
+
+    nodeBody.appendChild(canvas);
+
+  include analytic
+
+
+
+
+
+
