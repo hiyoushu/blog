@@ -27,7 +27,7 @@ gulp.task('sass', function() {
 });
 
 gulp.task('styles', ['sass'], function() {
-  return gulp.src('src/css/*.css')
+  return gulp.src('src/css/**/*.css')
     .pipe(autoprefixer('last 7 version', 'safari >= 5', 'ie >= 8', 'opera 12.1', 'ios >= 7', 'android >= 4'))
     // .pipe(gulp.dest('public/css'))
     // .pipe(rename({suffix: '.min'}))
@@ -82,9 +82,30 @@ gulp.task('watch', function() {
 });
 
 gulp.task('inject-header', ['styles', 'scripts'], function() {
-  var sourcesBlog = gulp.src(['./public/js/jquery*.js', './public/js/*.js', '!./public/js/admin*.js', './public/css/*.css', '!./public/css/admin*.css'], {read: false});
-  var sourcesAdmin = gulp.src(['./public/js/jquery*.js', './public/js/*.js', './public/css/*.css'], {read: false});
-  var sourcesIndex = gulp.src(['./public/js/common.js', './public/css/*.css', '!./public/css/admin*.css'], {read: false});
+  var sourcesBlog = gulp.src([
+    './public/js/jquery*.js',
+    './public/js/*.js',
+    '!./public/js/admin*.js',
+    '!./public/js/thin-editor*.js',
+    './public/css/*.css',
+    '!./public/css/admin*.css',
+    ], {read: false});
+
+  var sourcesAdmin = gulp.src([
+    './public/js/jquery*.js',
+    './public/js/*.js',
+    './public/js/medium-editor/*.js',
+    '!./public/js/thin-editor*.js',
+    './public/css/*.css',
+    './public/css/medium-editor/*.css',
+    ], {read: false});
+
+  var sourcesIndex = gulp.src([
+    './public/js/common.js',
+    '!./public/js/thin-editor*.js',
+    './public/css/*.css',
+    '!./public/css/admin*.css',
+    ], {read: false});
   // var sourcesCss = gulp.src(['./src/**/common.js', './src/**/common.css'], {read: false});
 
   // inject admin header

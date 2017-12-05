@@ -1,12 +1,24 @@
 include ./header
 
 style.
-  .container {
-    width: 660px;
-    min-height: 400px;
-    margin: auto;
-    padding: 10px;
+  /* thin editor */
+  .thin-editor-wrapper {
+    width: 100%;
     border: 1px solid #ccc;
+  }
+  .thin-editor-content {
+    min-height: 400px;
+    padding: 10px;
+  }
+
+  .post-content {
+    width: 780px;
+    min-height: 400px;
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+  }
+  #editor {
+    outline: none;
   }
   .post-form {
     width: 780px;
@@ -35,12 +47,30 @@ main.wrapper
         input#upload-file(type="file", accept=".jpeg, .jpg, .png", placeholder="上传题图")
         input#coverImg(name="coverImg", type="hidden")
       .post-edit
-        textarea.container(contenteditable="true", name="content", placeholder="内容")
+        .post-content(name="content")
+          #editor
       .post-edit
         input(type="hidden", name="userId", value="#{session.user._id}")
         input#submit-post(type="submit")
 input#jwt-token(type="hidden", value="#{session.token}")
 script.
+  //- init medium editor
+  var editor = new MediumEditor('#editor', {
+    toolbar: {
+      buttons: ['bold', 'italic', 'underline', 'h2', 'h3', 'anchor', 'image', 'quote',  {
+          name: 'pre',
+          contentDefault: 'code', // default text
+          contentFA: '<i class="fa fa-code"></i>' // custom icon if you're using font-awesome icons
+      }]
+    }
+  });
+
+  $(function () {
+      $('#editor').mediumInsert({
+          editor: editor
+      });
+  });
+  
   //- upload cover image
   $('#upload-file').on('change', function(){
     var $this = $(this);
@@ -83,6 +113,8 @@ script.
     $('#form').serializeArray().forEach(function(value, index, array){
       data[value.name] = value.value
     });
+
+    data.content = $('#thin-editor-content').html();
 
     $.ajax({
       url: '/api/posts',
