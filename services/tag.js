@@ -10,7 +10,15 @@ module.exports = {
 
   // find all tags
   getAllTags: function() {
-    return Tag.find().exec();
+    return Tag
+              .find()
+              .exec()
+              .then(function (tags) {
+                return tags.map(function(elem) {
+                          elem.realTagName = elem.tagName;
+                          return elem;
+                        });
+              });
   },
 
   // find tags by tagName
