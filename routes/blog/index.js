@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var OpenCC = require('opencc');
 var getLangPath = require('../../lib/get-lang-path');
 var siteName = require('../../config.js').site.siteName;
 
@@ -15,7 +16,7 @@ router.get('/', function(req, res, next) {
   var lang = req.i18n.language;
   var langPath = getLangPath(lang);
 
-  var urlWithoutLang = req.baseUrl.replace('/'+ lang, '');
+  var urlWithoutLang = req.originalUrl.replace('/'+ lang, '');
 
   Promise.all([
     Post.getPostsByPaging(10, 1),
@@ -44,6 +45,20 @@ router.get('/', function(req, res, next) {
 
         prevPage = 0;
 
+        // convert zh-hans to zh-hant
+        if (lang.toLowerCase() == 'zh-hant') {
+          var opencc = new OpenCC('s2t.json');
+          posts = JSON.parse(opencc.convertSync(JSON.stringify(posts)));
+          tags = JSON.parse(opencc.convertSync(JSON.stringify(tags)));
+          archives = JSON.parse(opencc.convertSync(JSON.stringify(archives)));
+        }
+
+        // add post intro
+        posts = posts.map(function(elem) {
+          elem.intro = elem.content.replace(/<[^>]+>/g, '');
+          return elem;
+        })
+
         res.render('blog/index', {
           langPath: langPath,
           title: req.i18n.t('blog.blog') +' - '+ siteName,
@@ -67,7 +82,7 @@ router.get('/page/:pageNum', function(req, res, next) {
   var lang = req.i18n.language;
   var langPath = getLangPath(lang);
 
-  var urlWithoutLang = req.baseUrl.replace('/'+ lang, '');
+  var urlWithoutLang = req.originalUrl.replace('/'+ lang, '');
 
   var pageNum = req.params.pageNum ? parseInt(req.params.pageNum, 10) : 1;
 
@@ -92,6 +107,7 @@ router.get('/page/:pageNum', function(req, res, next) {
           next();
         }
 
+        // paging
         var nextPage, prevPage;
 
         if (amount <= 10 * pageNum) {
@@ -105,6 +121,20 @@ router.get('/page/:pageNum', function(req, res, next) {
         } else {
           prevPage = pageNum - 1;
         }
+
+        // convert zh-hans to zh-hant
+        if (lang.toLowerCase() == 'zh-hant') {
+          var opencc = new OpenCC('s2t.json');
+          posts = JSON.parse(opencc.convertSync(JSON.stringify(posts)));
+          tags = JSON.parse(opencc.convertSync(JSON.stringify(tags)));
+          archives = JSON.parse(opencc.convertSync(JSON.stringify(archives)));
+        }
+
+        // add post intro
+        posts = posts.map(function(elem) {
+          elem.intro = elem.content.replace(/<[^>]+>/g, '');
+          return elem;
+        })
 
         res.render('blog/index', {
           langPath: langPath,
@@ -129,13 +159,19 @@ router.get('/:seoTitle', function(req, res, next) {
   var lang = req.i18n.language;
   var langPath = getLangPath(lang);
 
-  var urlWithoutLang = req.baseUrl.replace('/'+ lang, '');
+  var urlWithoutLang = req.originalUrl.replace('/'+ lang, '');
 
   Post.getPostBySeoTitle(req.params.seoTitle)
     .then(function (posts) {
       if (posts == null) {
         next();
       } else {
+        // convert zh-hans to zh-hant
+        if (lang.toLowerCase() == 'zh-hant') {
+          var opencc = new OpenCC('s2t.json');
+          posts = JSON.parse(opencc.convertSync(JSON.stringify(posts)));
+        }
+
         res.render('blog/post', {
           langPath: langPath,
           title: posts.title +' - '+ siteName,

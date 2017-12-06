@@ -89,15 +89,7 @@ module.exports = {
       .sort({ createTime: 'desc' })
       .skip(pageSize * (pageNumber - 1))
       .limit(pageSize)
-      .exec()
-      .then(function (posts) {
-        posts.map(function(elem) {
-          elem.intro = elem.content.replace(/<[^>]+>/g, '');
-          return elem;
-        })
-
-        return posts;
-      });
+      .exec();
   },
 
   // increase pv
