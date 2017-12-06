@@ -59,7 +59,7 @@ module.exports = {
     return Post
       .find(query)
       // .populate({ path: 'author', model: 'User' })
-      .sort({ createTime: 'asc' })
+      .sort({ createTime: 'desc' })
       .exec();
   },
 
@@ -74,7 +74,7 @@ module.exports = {
     return Post
       .find(query)
       .limit(num)
-      .sort({ createTime: 'asc' })
+      .sort({ createTime: 'desc' })
       .exec();
   },
 
@@ -86,7 +86,7 @@ module.exports = {
 
     return Post
       .find(query)
-      .sort({ createTime: 'asc' })
+      .sort({ createTime: 'desc' })
       .skip(pageSize * (pageNumber - 1))
       .limit(pageSize)
       .exec()
