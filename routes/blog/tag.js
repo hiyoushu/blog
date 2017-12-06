@@ -19,7 +19,11 @@ router.get('/', function(req, res, next) {
       // convert zh-hans to zh-hant
       if (lang.toLowerCase() == 'zh-hant') {
         var opencc = new OpenCC('s2t.json');
-        tags = JSON.parse(opencc.convertSync(JSON.stringify(tags)));
+        tags = tags.map(function(elem) {
+          elem.realTagName = elem.tagName;
+          elem.tagName = opencc.convertSync(elem.tagName);
+          return elem;
+        })
       }
 
       res.render('blog/tag-index', {
@@ -42,13 +46,13 @@ router.get('/:tagName', function(req, res, next) {
 
   var urlWithoutLang = req.originalUrl.replace('/'+ lang, '');
 
-  var realTagName = req.params.tagName;
+  var tagName = req.params.tagName;
   if (lang.toLowerCase() == 'zh-hant') {
-    var opencc = new OpenCC('t2s.json');
-    realTagName = opencc.convertSync(req.params.tagName);
+    var opencc = new OpenCC('s2t.json');
+    tagName = opencc.convertSync(req.params.tagName);
   }
 
-  Post.getByTagName(realTagName)
+  Post.getByTagName(req.params.tagName)
     .then(function (posts) {
       if (posts == null) {
         next();
@@ -61,7 +65,7 @@ router.get('/:tagName', function(req, res, next) {
 
         res.render('blog/list', {
           langPath: langPath,
-          title: req.params.tagName +' - '+ req.i18n.t('blog.tag') +' - '+ siteName,
+          title: tagName +' - '+ req.i18n.t('blog.tag') +' - '+ siteName,
           content: 'post about this tag',
           posts: posts,
           originPath: urlWithoutLang,

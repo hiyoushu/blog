@@ -26,7 +26,7 @@ main.wrapper
           a(href="#{langPath}/blog/tag")= t('blog.tag')
         each tagItem in tags
           .tag-item
-            a(href="#{langPath}/blog/tag/#{tagItem.tagName}")= tagItem.tagName
+            a(href="#{langPath}/blog/tag/#{tagItem.realTagName}")= tagItem.tagName
       .archive-list
         h2
           a(href="#{langPath}/blog/archive")= t('blog.archive')

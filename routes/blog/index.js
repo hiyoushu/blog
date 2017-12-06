@@ -49,7 +49,11 @@ router.get('/', function(req, res, next) {
         if (lang.toLowerCase() == 'zh-hant') {
           var opencc = new OpenCC('s2t.json');
           posts = JSON.parse(opencc.convertSync(JSON.stringify(posts)));
-          tags = JSON.parse(opencc.convertSync(JSON.stringify(tags)));
+          tags = tags.map(function(elem) {
+            elem.realTagName = elem.tagName;
+            elem.tagName = opencc.convertSync(elem.tagName);
+            return elem;
+          })
           archives = JSON.parse(opencc.convertSync(JSON.stringify(archives)));
         }
 
@@ -126,7 +130,11 @@ router.get('/page/:pageNum', function(req, res, next) {
         if (lang.toLowerCase() == 'zh-hant') {
           var opencc = new OpenCC('s2t.json');
           posts = JSON.parse(opencc.convertSync(JSON.stringify(posts)));
-          tags = JSON.parse(opencc.convertSync(JSON.stringify(tags)));
+          tags = tags.map(function(elem) {
+            elem.realTagName = elem.tagName;
+            elem.tagName = opencc.convertSync(elem.tagName);
+            return elem;
+          })
           archives = JSON.parse(opencc.convertSync(JSON.stringify(archives)));
         }
 
