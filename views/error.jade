@@ -1,6 +1,20 @@
-extends layout
+include header
 
-block content
-  h1= message
-  h2= error.status
-  pre #{error.stack}
+style.
+  .not-found-wraper {
+    margin: 100px auto;
+    text-align: center;
+  }
+main.wrapper.not-found-wraper
+  h1 site went wrong somewhere!
+  p This is 500 page!
+
+include footer
+
+
+//- extends layout
+
+//- block content
+//-   h1= message
+//-   h2= error.status
+//-   pre #{error.stack}
