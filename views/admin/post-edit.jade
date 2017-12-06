@@ -1,13 +1,16 @@
 include ./header
 
 style.
-  .container {
-    width: 660px;
+  .post-content {
+    width: 780px;
     min-height: 400px;
-    margin: auto;
-    padding: 10px;
+    padding: 10px 20px;
     border: 1px solid #ccc;
   }
+  #editor {
+    outline: none;
+  }
+
   .post-form {
     width: 780px;
     margin: auto;
@@ -35,7 +38,8 @@ main.wrapper
         input#upload-file(type="file", accept=".jpeg, .jpg, .png", placeholder="上传题图")
         input#coverImg(name="coverImg", type="hidden")
       .post-edit
-        textarea.container(contenteditable="true", name="content", placeholder="内容") #{post.content}
+        .post-content(name="content")
+          #editor !{post.content}
       .post-edit
         input(type="hidden", name="userId", value="#{session.user._id}")
         input(type="hidden", name="postId", value="#{post._id}")
@@ -43,6 +47,17 @@ main.wrapper
 
 input#jwt-token(type="hidden", value="#{session.token}")
 script.
+  //- init medium editor
+  var editor = new MediumEditor('#editor', {
+    toolbar: {
+      buttons: ['bold', 'italic', 'underline', 'h2', 'h3', 'anchor', 'image', 'quote',  {
+          name: 'pre',
+          contentDefault: 'code', // default text
+          contentFA: '<i class="fa fa-code"></i>' // custom icon if you're using font-awesome icons
+      }]
+    }
+  });
+
   //- upload cover image
   $('#upload-file').on('change', function(){
     var $this = $(this);
