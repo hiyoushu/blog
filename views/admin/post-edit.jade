@@ -101,6 +101,8 @@ script.
       data[value.name] = value.value
     });
 
+    data.content = $('#editor').html();
+
     $.ajax({
       url: '/api/posts/'+ data.postId,
       type: 'PUT',
