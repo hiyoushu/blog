@@ -31,6 +31,10 @@ style.
     display: inline-block;
     padding: 8px;
   }
+  .show-cover-img img {
+    display: block;
+    width: 100%;
+  }
 main.wrapper
   section.m-header
     h1 create post
@@ -45,6 +49,7 @@ main.wrapper
         input(name="tag", placeholder="标签")
       .post-edit
         input#upload-file(type="file", accept=".jpeg, .jpg, .png", placeholder="上传题图")
+        .show-cover-img
         input#coverImg(name="coverImg", type="hidden")
       .post-edit
         .post-content(name="content")
@@ -86,7 +91,10 @@ script.
         if(window.FileReader) {
           var reader = new FileReader();
           reader.onload = function(e) {
-            $this.after('<img src="'+ e.target.result +'">');
+            //- e.target.result // base64 data of uploaded image
+            $this
+              .siblings('.show-cover-img')
+              .append('<img src="'+ res.data.filePath +'">');
           }
           reader.readAsDataURL($this[0].files[0]);
         }

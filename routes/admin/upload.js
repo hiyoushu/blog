@@ -30,17 +30,13 @@ var storage = multer.diskStorage({
 });
 var upload = multer({storage: storage});
 
-
 // upload file handle
-router.post('/', checkAdmin, checkLogin, function(req, res, next) {
-  next();
-});
-router.post('/', checkAdmin, upload.single('uploadFile'), function(req, res, next) {
+router.post('/', checkAdmin, checkLogin, upload.single('uploadFile'), function(req, res, next) {
   res.json({
     code: 10001,
     message: 'upload success',
     data: {
-      filePath: req.file.path,
+      filePath: req.file.path.replace('public', ''),
     }
   });
 });
