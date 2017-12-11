@@ -18,6 +18,7 @@ style.
     border: 1px solid #ccc;
   }
   #editor {
+    min-height: 300px;
     outline: none;
   }
   .post-form {
@@ -35,6 +36,22 @@ style.
     display: block;
     width: 100%;
   }
+
+  .medium-editor-ys-uploader {
+    display: none;
+    position: absolute;
+    border: 1px solid #eee;
+    cursor: pointer;
+  }
+  .medium-editor-ys-uploader-file {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    height: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+  }
 main.wrapper
   section.m-header
     h1 create post
@@ -48,6 +65,7 @@ main.wrapper
       .post-edit
         input(name="tag", placeholder="标签")
       .post-edit
+        label 题图
         input#upload-file(type="file", accept=".jpeg, .jpg, .png", placeholder="上传题图")
         .show-cover-img
         input#coverImg(name="coverImg", type="hidden")
@@ -56,10 +74,77 @@ main.wrapper
           #editor
       .post-edit
         input(type="hidden", name="userId", value="#{session.user._id}")
-        input#submit-post(type="submit")
+        span#submit-post.admin-button-l1 发布
+        span#save-post.admin-button-l1 存草稿
+
 input#jwt-token(type="hidden", value="#{session.token}")
 script.
   //- init medium editor
+  var UploadFileExtension = MediumEditor.Extension.extend({
+    name: 'upload-file-menu',
+
+    init: function () {      
+      this.subscribe('editableKeyup', this.handleKeyup.bind(this));
+      $(this.base.elements[0]).append(this.panel);
+      
+      var that = this;
+      this.panel.on('change', '.medium-editor-ys-uploader-file', function(){
+        var $this = $(this);
+        var file = $this.prop('files');
+        var data = new FormData();
+        data.append('uploadFile', file[0]);
+
+        $.ajax({
+          url: '/admin/upload',
+          type: 'POST',
+          data: data,
+          cache: false,
+          processData: false,
+          contentType: false,
+        })
+        .done(function (res){
+          if(res.code == 10001) {
+            $(that.currentCursor).html('<img src="'+ res.data.filePath +'">');
+          } else {
+            alert(res.message)
+          }
+        })
+        .fail(function (error){
+          console.log(error);
+        });
+      });
+    },
+
+    currentCursor: null,
+
+    lastEditRange: null,
+
+    panel: $('<div class="medium-editor-ys-uploader" contenteditable="false"><input class="medium-editor-ys-uploader-file" type="file" accept=".jpeg, .jpg, .png"/><i class="fa fa-plus-square-o" aria-hidden="true"></i></div>'),
+
+    handleKeyup: function (event, editable) {
+      if (MediumEditor.util.isKey(event, MediumEditor.util.keyCode.ENTER) || MediumEditor.util.isKey(event, MediumEditor.util.keyCode.BACKSPACE)) {
+        var selection = getSelection();
+        this.lastEditRange = selection.getRangeAt(0);
+
+        if (selection.anchorNode.nodeName.toLowerCase() == 'p' && selection.anchorOffset == 0) {
+          this.currentCursor = selection.anchorNode;
+          var $_p = $(selection.anchorNode);
+          var top = $_p.offset().top + selection.anchorNode.offsetHeight * 1.5;
+          var left = $_p.offset().left;
+
+          $(this.panel)
+            .show()
+            .css({
+              top: top,
+              left: left,
+            })
+        } else {
+          $(this.panel).hide()
+        }
+      }
+    }
+  });
+  
   var editor = new MediumEditor('#editor', {
     toolbar: {
       buttons: ['bold', 'italic', 'underline', 'h2', 'h3', 'anchor', 'image', 'quote',  {
@@ -67,8 +152,12 @@ script.
           contentDefault: 'code', // default text
           contentFA: '<i class="fa fa-code"></i>' // custom icon if you're using font-awesome icons
       }]
+    },
+    extensions: {
+      'upload-file-menu': new UploadFileExtension()
     }
   });
+  
   
   //- upload cover image
   $('#upload-file').on('change', function(){
@@ -88,16 +177,20 @@ script.
     .done(function (res){
       if(res.code == 10001) {
         $('#coverImg').val(res.data.filePath);
-        if(window.FileReader) {
-          var reader = new FileReader();
-          reader.onload = function(e) {
-            //- e.target.result // base64 data of uploaded image
-            $this
-              .siblings('.show-cover-img')
-              .append('<img src="'+ res.data.filePath +'">');
-          }
-          reader.readAsDataURL($this[0].files[0]);
-        }
+        $this
+          .siblings('.show-cover-img')
+          .append('<img src="'+ res.data.filePath +'">');
+
+        //- if(window.FileReader) {
+        //-   var reader = new FileReader();
+        //-   reader.onload = function(e) {
+        //-     //- e.target.result // base64 data of uploaded image
+        //-     $this
+        //-       .siblings('.show-cover-img')
+        //-       .append('<img src="'+ res.data.filePath +'">');
+        //-   }
+        //-   reader.readAsDataURL($this[0].files[0]);
+        //- }
       } else {
         alert(res.message)
       }
@@ -116,7 +209,10 @@ script.
       data[value.name] = value.value
     });
 
-    data.content = $('#editor').html();
+    data.content = $('#editor')
+                      .html()
+                      .replace(/<div class="medium-editor-ys-uploader".*?<\/div>/, '')
+                      .replace(/<p><br><\/p>/g, '');
 
     $.ajax({
       url: '/api/posts',
