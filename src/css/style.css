@@ -652,6 +652,15 @@ a:active, a:focus {
   @media screen and (min-width: 414px) {
     .header-lang-list {
       background: #fff; } }
+  .header-lang-list.active {
+    display: block;
+    position: absolute;
+    top: 48px;
+    width: 100px;
+    border: 1px solid #f6f6f6; }
+  .header-lang-list.active .lang-item {
+    padding: 10px;
+    text-align: center; }
   .header-lang:hover .header-lang-list {
     display: block;
     position: absolute;

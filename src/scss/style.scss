@@ -346,6 +346,18 @@ a:visited {
     background: #fff;
   }
 
+  &.active {
+    display: block;
+    position: absolute;
+    top: 48px;
+    width: 100px;
+    border: 1px solid $light-gray;
+  }
+  &.active .lang-item {
+    padding: 10px;
+    text-align: center;
+  }
+
   .header-lang:hover & {
     display: block;
     position: absolute;
