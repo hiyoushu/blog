@@ -636,12 +636,14 @@ a:active, a:focus {
   .header-lang {
     display: flex;
     justify-content: flex-end;
-    align-items: stretch; } }
+    align-items: stretch;
+    position: relative; } }
 
 .header-lang .nav-item {
   cursor: pointer;
   border-bottom: none;
-  user-select: none; }
+  user-select: none;
+  min-width: 80px; }
 
 @media screen and (max-width: 414px) {
   .header-lang .nav-item {
@@ -651,23 +653,23 @@ a:active, a:focus {
   display: none; }
   @media screen and (min-width: 414px) {
     .header-lang-list {
-      background: #fff; } }
+      background: #fff; }
+      .header-lang:hover .header-lang-list {
+        display: block;
+        position: absolute;
+        top: 48px;
+        width: 100%;
+        border: 1px solid #f6f6f6; }
+      .header-lang:hover .header-lang-list .lang-item {
+        padding: 10px;
+        text-align: center; } }
   .header-lang-list.active {
     display: block;
     position: absolute;
     top: 48px;
-    width: 100px;
+    width: 100%;
     border: 1px solid #f6f6f6; }
   .header-lang-list.active .lang-item {
-    padding: 10px;
-    text-align: center; }
-  .header-lang:hover .header-lang-list {
-    display: block;
-    position: absolute;
-    top: 48px;
-    width: 100px;
-    border: 1px solid #f6f6f6; }
-  .header-lang:hover .header-lang-list .lang-item {
     padding: 10px;
     text-align: center; }
   @media screen and (max-width: 414px) {

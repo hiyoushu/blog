@@ -325,12 +325,14 @@ a:visited {
 .header-lang {
   @include screen(biggerPlus) {
     @include header-nav;
+    position: relative;
   }
 
   .nav-item {
     cursor: pointer;
     border-bottom: none;
     user-select: none;
+    min-width: 80px;
   }
 
   @include screen(smallPlus) {
@@ -344,28 +346,28 @@ a:visited {
   
   @include screen(biggerPlus) {
     background: #fff;
+
+    .header-lang:hover & {
+      display: block;
+      position: absolute;
+      top: 48px;
+      width: 100%;
+      border: 1px solid $light-gray;
+    }
+    .header-lang:hover & .lang-item {
+      padding: 10px;
+      text-align: center;
+    }
   }
 
   &.active {
     display: block;
     position: absolute;
     top: 48px;
-    width: 100px;
+    width: 100%;
     border: 1px solid $light-gray;
   }
   &.active .lang-item {
-    padding: 10px;
-    text-align: center;
-  }
-
-  .header-lang:hover & {
-    display: block;
-    position: absolute;
-    top: 48px;
-    width: 100px;
-    border: 1px solid $light-gray;
-  }
-  .header-lang:hover & .lang-item {
     padding: 10px;
     text-align: center;
   }
