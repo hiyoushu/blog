@@ -105,6 +105,7 @@ gulp.task('inject-header', ['styles', 'scripts'], function() {
     '!./public/js/thin-editor*.js',
     './public/css/*.css',
     '!./public/css/admin*.css',
+    '!./public/css/font-awesome*.css',
     ], {read: false});
   // var sourcesCss = gulp.src(['./src/**/common.js', './src/**/common.css'], {read: false});
 

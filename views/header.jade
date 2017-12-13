@@ -12,12 +12,12 @@ html(lang="zh-CN")
     //- inject:css
     link(rel="stylesheet", href="/css/font-awesome_e260688f9ecfb503c2c95ea23cc6ba60.css")
     link(rel="stylesheet", href="/css/font_1479ab280f8e3f241ac65ef47ed309e4.css")
-    link(rel="stylesheet", href="/css/style_0b8c641965ea9ed8f0170df96783e213.css")
+    link(rel="stylesheet", href="/css/style_bbe40e60269fedf24ae4694326b4b3ed.css")
     //- endinject
     
     //- inject:js
     script(src="/js/jquery-3.2.1_be1bac2e55e8c79fe4aa515a509ad2e8.js")
-    script(src="/js/common_f28425473947b350f0f03a97adc08b4f.js")
+    script(src="/js/common_71994437bdf24cf8c30dc7640839dfd9.js")
     //- endinject
   body
     header#js-header.header
@@ -31,7 +31,7 @@ html(lang="zh-CN")
             a.nav-item(href="#{langPath}/blog/archive")= t('blog.archive')
             a.nav-item(href="#{langPath}/about")= t('blog.about')
           .header-lang
-            span#js-switch-lang.nav-item Language
+            span.nav-item Language
             ul.header-lang-list
               if langPath == '/en'
                 li.lang-item

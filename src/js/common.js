@@ -14,10 +14,4 @@ $(function() {
     $('#js-header').toggleClass('active');
     $('#js-header-nav').toggleClass('active');
   });
-
-  // switch language
-  $('#js-switch-lang').on('click', function(event) {
-    var $this = $(this);
-    $this.siblings('.header-lang-list').toggleClass('active');
-  });
 })

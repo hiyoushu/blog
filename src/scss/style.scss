@@ -346,14 +346,14 @@ a:visited {
     background: #fff;
   }
 
-  &.active {
+  .header-lang:hover & {
     display: block;
     position: absolute;
     top: 48px;
     width: 100px;
     border: 1px solid $light-gray;
   }
-  &.active .lang-item {
+  .header-lang:hover & .lang-item {
     padding: 10px;
     text-align: center;
   }
@@ -551,12 +551,3 @@ a:visited {
     width: 100%;
   }
 }
-
-  
-
-
-
-
-
-
-
