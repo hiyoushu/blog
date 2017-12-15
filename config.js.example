@@ -20,4 +20,34 @@ module.exports = {
     available: true
   },
   uploadDir: './public/upload/',
+  defalutAdmin: {
+    userName: 'your user name',
+    nickName: 'your nick name',
+    password: 'your password',
+    email: 'your email,
+    avatar: '',
+  },
+  admin: {
+    available: true,
+    robotsAccess: false,
+  },
+  site: {
+    siteName: 'your site name',
+  },
+  i18n: {
+    languages: [
+      'zh',
+      'zh-CN',
+      'zh-Hant',
+      'en',
+    ],
+    ignoreI18nPath: [
+      '/admin',
+      '/api',
+    ],
+  },
+  jwt: {
+    secret: 'your jwt secret',
+    expire: 3600,
+  },
 }
