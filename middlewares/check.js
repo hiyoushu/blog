@@ -31,6 +31,7 @@ module.exports = {
       var err = new Error('Not Found');
       err.status = 404;
       next(err);
+      return;
     }
 
     if (!adminConfig.robotsAccess) {
@@ -39,6 +40,7 @@ module.exports = {
         var err = new Error('Not Found');
         err.status = 404;
         next(err);
+        return;
       }
     }
 
