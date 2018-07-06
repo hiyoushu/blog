@@ -27,13 +27,18 @@ module.exports = {
   checkAdmin: function checkAdmin(req, res, next) {
     var adminConfig = require('../config').admin;
     if (!adminConfig.available) {
-      return res.status(404).render('404');
+
+      var err = new Error('Not Found');
+      err.status = 404;
+      next(err);
     }
 
     if (!adminConfig.robotsAccess) {
       var userAgent = req.headers['user-agent'];
       if (/spider|Googlebot|Bingbot|Baiduspider|Sogou/ig.test(userAgent)) {
-        return res.status(404).render('404');
+        var err = new Error('Not Found');
+        err.status = 404;
+        next(err);
       }
     }
 

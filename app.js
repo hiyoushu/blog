@@ -77,6 +77,7 @@ app.use(function(req, res, next) {
 
 // error handler
 app.use(function(err, req, res, next) {
+  console.log('error handler')
   var getLangPath = require('./lib/get-lang-path');
   var lang = req.i18n ? req.i18n.language : 'zh-CN';
   var langPath = getLangPath(lang);
@@ -96,7 +97,11 @@ app.use(function(err, req, res, next) {
       res.render('404-without-i18n', {langPath: langPath, originPath: urlWithoutLang});
     }
   } else {
-    res.render('error', {langPath: langPath, originPath: urlWithoutLang});
+    if (req.i18n) {
+      res.render('error', {langPath: langPath, originPath: urlWithoutLang});
+    } else {
+      res.render('error-without-i18n', {langPath: langPath, originPath: urlWithoutLang});
+    }
   }
 });
 

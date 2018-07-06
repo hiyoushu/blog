@@ -21,9 +21,7 @@ router.get('/:lang', function(req, res, next) {
   var paramLang = req.params.lang.toLowerCase();
 
   if (!req.i18n) {
-    return res
-            .status(404)
-            .render('404-without-i18n', {langPath: '/', originPath: urlWithoutLang});
+    next();
   } else {
     var getLangPath = require('../lib/get-lang-path');
     var lang = req.i18n ? req.i18n.language : 'zh-CN';
@@ -38,18 +36,17 @@ router.get('/:lang', function(req, res, next) {
       if (languages.indexOf(paramLang) > -1) {
         req.i18n.changeLanguage(paramLang);
       } else {
-        return res
-                .status(404)
-                .render('404', {langPath: '/', originPath: urlWithoutLang});
+        next();
+        return;
       }
     }
-  }
 
-  res.render('index', {
-    langPath: langPath,
-    title: 'Youshu',
-    originPath: urlWithoutLang,
-  });
+    res.render('index', {
+      langPath: langPath,
+      title: 'Youshu',
+      originPath: urlWithoutLang,
+    });
+  }
 });
 
 module.exports = router;
