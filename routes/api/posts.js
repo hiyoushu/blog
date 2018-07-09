@@ -133,11 +133,11 @@ router.put('/:postId', token.check, function(req, res, next) {
       if (result) {
         res
           .status(201)
-          .json({code: 10001, message: 'created', data: result});
+          .json({code: 10001, message: 'updated', data: result});
       } else {
         res
           .status(400)
-          .json({code: 10002, message: 'error', error: 'create failed!'});
+          .json({code: 10002, message: 'error', error: 'update failed!'});
       }
     })
     .catch(next);

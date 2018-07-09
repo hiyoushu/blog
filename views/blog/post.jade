@@ -1,11 +1,19 @@
 include ../header
+script(src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js")
+script.
+  $(document).ready(function() {
+    $("pre").wrapInner('<code class="javascript"></code>');
+
+    $('pre code').each(function(i, block) {
+      hljs.highlightBlock(block);
+    });
+  });
 
 main.wrapper
   .post-cover
     img.post-cover-img(src="/upload/cover-demo.jpg")
   article.post-article
-    h1 #{title}
-    !{content}
-
+    h1 #{title} 
+    | !{content} 
   include ./disqus
 include ../footer
